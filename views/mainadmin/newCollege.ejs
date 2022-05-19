@@ -1,0 +1,218 @@
+<%- include('./common/header.ejs') %>
+
+
+
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Forms /</span> New Institute</h4>
+
+    <!-- Basic Layout & Basic with Icons -->
+    <div class="row">
+      <!-- Basic with Icons -->
+      <div class="col-xxl">
+        <div class="card mb-4">
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">Add New Institute</h5>
+            <small class="text-muted float-end">Fill in details for the New Institute to be added</small>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Institute Name</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-fullname2" class="input-group-text"
+                      ><i class="bx bx-user"></i
+                    ></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      placeholder="Institute Name"
+                      aria-label="Institute Name"
+                      aria-describedby="basic-icon-default-fullname2"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">University Name</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-fullname2" class="input-group-text"
+                      ><i class="bx bx-user"></i
+                    ></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="basic-icon-default-fullname"
+                      placeholder="University Name"
+                      aria-label="University Name"
+                      aria-describedby="basic-icon-default-fullname2"
+                    />
+                  </div>
+                </div>
+              </div> -->
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-company">Image Link</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-company2" class="input-group-text"
+                      ><i class="bx bx-buildings"></i
+                    ></span>
+                    <input
+                      type="link"
+                      id="logoLink"
+                      class="form-control"
+                      placeholder="logoLink"
+                      aria-label="logoLink"
+                      aria-describedby="basic-icon-default-company2"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-email">Official Website</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                    <input
+                      type="text"
+                      id="website"
+                      class="form-control"
+                      placeholder="www.adgitm.com"
+                      aria-label="www.adgitm.com"
+                      aria-describedby="basic-icon-default-email2"
+                    />
+                    <!-- <span id="basic-icon-default-email2" class="input-group-text">@example.com</span> -->
+                  </div>
+                  <!-- <div class="form-text">You can use letters, numbers & periods</div> -->
+                </div>
+              </div>
+              <!-- <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-email">Admin Email</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                    <input
+                      type="text"
+                      id="basic-icon-default-email"
+                      class="form-control"
+                      placeholder="admin-example"
+                      aria-label="john.doe"
+                      aria-describedby="basic-icon-default-email2"
+                    />
+                    <span id="basic-icon-default-email2" class="input-group-text">@colllege-name.com</span>
+                  </div>
+                  <div class="form-text">You can use letters, numbers & periods</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 form-label" for="basic-icon-default-phone">Admin No</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-phone2" class="input-group-text"
+                      ><i class="bx bx-phone"></i
+                    ></span>
+                    <input
+                      type="text"
+                      id="basic-icon-default-phone"
+                      class="form-control phone-mask"
+                      placeholder="93196 16722"
+                      aria-label="93196 16722"
+                      aria-describedby="basic-icon-default-phone2"
+                    />
+                  </div>
+                </div>
+              </div> -->
+
+              <!-- <div class="mb-3 row">
+                <label for="html5-password-input" class="col-md-2 col-form-label">Password</label>
+                <div class="col-md-10">
+                  <input class="form-control" type="password" value="" placeholder="Enter Password" id="html5-password-input" />
+                </div>
+              </div> -->
+
+              <div class="mb-3 row">
+                <label for="exampleFormControlSelect1" class="col-md-2 col-form-label">Select Plan</label>
+                <div class="col-md-10">
+                    <select class="form-select" id="plans" aria-label="Default select example">
+                      <option selected>Net-Se Plans</option>
+                      <option value="1">Trial - First 6 Months Free</option>
+                      <option value="2">Trial Plus Paid - First 6 Months Free Plus 6 MOnths Paid</option>
+                      <option value="3">Complete Paid - 12 Months</option>
+                    </select>
+                </div>
+              </div>
+
+              <!-- <div class="row mb-3">
+                <label class="col-sm-2 form-label" for="basic-icon-default-message">Message</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-message2" class="input-group-text"
+                      ><i class="bx bx-comment"></i
+                    ></span>
+                    <textarea
+                      id="basic-icon-default-message"
+                      class="form-control"
+                      placeholder="Hi, Do you have a moment to talk Joe?"
+                      aria-label="Hi, Do you have a moment to talk Joe?"
+                      aria-describedby="basic-icon-default-message2"
+                    ></textarea>
+                  </div>
+                </div>
+              </div> -->
+              <div class="row justify-content-end">
+                <div class="col-sm-10">
+                  <button type="submit" id="new-college" class="btn btn-primary">Register</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+      const fetchData = (data) => {
+          data.collegeName = document.getElementById('name').value;
+          data.officialWebsite = document.getElementById('website').value;
+          data.imageLink = document.getElementById('logoLink').value;
+          console.log(data)
+          return data;
+      }
+      const registerCollege  = async(data) => {
+          
+          const response = await fetch('/main-admin/dashboard/new-institute/', {
+              method: "POST", 
+              body: JSON.stringify(data), 
+              headers: {
+                  "Content-type": "application/json"
+              }
+          })
+          .then(response => response.json())
+          if(response.code == 200){
+              window.location.href = "/main-admin/dashboard/new-institute/";
+          } else {
+              alert(response.error);
+          }
+          console.log(response)
+          return response;
+      }
+
+
+      document.getElementById('new-college').addEventListener('click', e=>{
+          e.preventDefault()
+          data= {}
+          data = fetchData(data)
+          registerCollege(data)
+      })
+  </script>
+
+
+
+
+<%- include('./common/footer.ejs') %>

@@ -1,0 +1,197 @@
+<%- include('./common/header.ejs') %>
+
+
+
+
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Forms /</span> New Subject</h4>
+
+    <!-- Basic Layout & Basic with Icons -->
+    <div class="row">
+      <!-- Basic with Icons -->
+      <div class="col-xxl">
+        <div class="card mb-4">
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">New Subject Form</h5>
+            <small class="text-muted float-end">Fill in details for the New Subject</small>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Subject Name</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-fullname2" class="input-group-text"
+                      ><i class="bx bx-user"></i
+                    ></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="subjectName"
+                      placeholder="Subject Name"
+                      aria-label="Subject Name"
+                      aria-describedby="basic-icon-default-fullname2"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Subject ID</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-fullname2" class="input-group-text"
+                      ><i class="bx bx-user"></i
+                    ></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="subjectId"
+                      placeholder="Subejct Id"
+                      aria-label="Subject Id"
+                      aria-describedby="basic-icon-default-fullname2"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+    
+              
+
+              <div class="mb-3 row">
+                <label for="exampleFormControlSelect1" class="form-label col-sm-2">Course</label>
+                <div class="col-sm-10">
+                  <select class="form-select" id="course" aria-label="Default select example">
+                    <option selected>Select Course</option>
+                    <% for(var i = 0; i < courses.length; i++){ %>
+                    <option value="<%= courses[i].courseId %>"><%= courses[i].courseName %></option>
+                    <% } %>
+                    
+                  </select>
+                </div>
+              </div>
+
+
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Year</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-fullname2" class="input-group-text"
+                      ><i class="bx bx-user"></i
+                    ></span>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="year"
+                      placeholder="Year"
+                      aria-label="Year"
+                      aria-describedby="basic-icon-default-fullname2"
+                    />
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Semester</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-fullname2" class="input-group-text"
+                      ><i class="bx bx-user"></i
+                    ></span>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="sem"
+                      placeholder="Semester"
+                      aria-label="Semester"
+                      aria-describedby="basic-icon-default-fullname2"
+                    />
+                  </div>
+                </div>
+              </div>
+
+             
+
+              <!-- <div class="row mb-3">
+                <label class="col-sm-2 form-label" for="basic-icon-default-message">Message</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-message2" class="input-group-text"
+                      ><i class="bx bx-comment"></i
+                    ></span>
+                    <textarea
+                      id="basic-icon-default-message"
+                      class="form-control"
+                      placeholder="Hi, Do you have a moment to talk Joe?"
+                      aria-label="Hi, Do you have a moment to talk Joe?"
+                      aria-describedby="basic-icon-default-message2"
+                    ></textarea>
+                  </div>
+                </div>
+              </div> -->
+              <div class="row justify-content-end">
+                <div class="col-sm-10">
+                  <button type="submit" id="register-teacher-button" class="btn btn-primary">Register</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const fetchData = (data) => {
+          data.subjectName = document.getElementById('subjectName').value;
+          data.subjectId = document.getElementById('subjectId').value;
+          data.courseId = document.getElementById('course').value;
+          data.year = document.getElementById('year').value;
+          data.sem = document.getElementById('sem').value;
+          data.collegeId = '<%= admin.collegeId %>'
+          console.log(data)
+          return data;
+      }
+      const addSubject = async(data) => {
+          
+          const response = await fetch('/admin/addNewSubject', {
+              method: "POST", 
+              body: JSON.stringify(data), 
+              headers: {
+                  "Content-type": "application/json"
+              }
+          })
+          .then(response => response.json())
+          if(response.code == 200){
+              window.location.href = "/admin/dashboard/<%= admin.collegeId %>";
+          } else {
+              alert(response.error);
+          }
+          console.log(response)
+          return response;
+      }
+
+
+      document.getElementById('register-teacher-button').addEventListener('click', e=>{
+          e.preventDefault()
+          data= {}
+          data = fetchData(data)
+          addSubject(data)
+      })
+
+    
+  </script>
+
+
+
+
+
+
+
+<%- include('./common/footer.ejs') %>

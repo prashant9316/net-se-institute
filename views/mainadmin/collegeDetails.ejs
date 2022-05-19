@@ -1,0 +1,176 @@
+<%- include('./common/header.ejs') %>
+
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">College /</span> <%= college.collegeName %> </h4>
+
+    <!-- Basic Bootstrap Table -->
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>S.No.</th>
+              <th>Admin Name</th>
+              <th>Phone Number</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+              <% for(var i = 0; i < admins.length; i++) { %>
+            <tr>
+                <td><small class="text-muted"><%= i+1 %></small></td>
+              <td><strong><%= admins[i].username %></strong></td>
+              <td><%= admins[i].phoneNumber %></td>
+              
+                <td>
+                <div class="dropdown">
+                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                    <i class="bx bx-dots-vertical-rounded"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="javascript:void(0);"
+                      ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                    >
+                    <!-- <a class="dropdown-item" href="javascript:void(0);"
+                      ><i class="bx bx-trash me-1"></i> Delete</a
+                    > -->
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <% } %>
+            
+            
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="row">
+        <!-- Basic with Icons -->
+        <div class="col-xxl">
+          <div class="card mb-4">
+            <div class="card-header d-flex align-items-center justify-content-between">
+              <h5 class="mb-0">Create New Credentials for the College</h5>
+              <small class="text-muted float-end">Fill in Username password and phonenumber for the new credentials</small>
+            </div>
+            <div class="card-body">
+              <form method="post" action="/main-admin/dashboard/new-credentials/<%= college.collegeId %>">
+
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Username</label>
+                  <div class="col-sm-10">
+                    <div class="input-group input-group-merge">
+                      <span id="basic-icon-default-fullname2" class="input-group-text"
+                        ><i class="bx bx-user"></i
+                      ></span>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="username"
+                        placeholder="admin-1@adgitm.com"
+                        aria-label="admin-1@adgitm.com"
+                        aria-describedby="basic-icon-default-fullname2"
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+  
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Password</label>
+                  <div class="col-sm-10">
+                    <div class="input-group input-group-merge">
+                      <span id="basic-icon-default-fullname2" class="input-group-text"
+                        ><i class="bx bx-user"></i
+                      ></span>
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        placeholder="password"
+                        aria-label="********"
+                        aria-describedby="basic-icon-default-fullname2"
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Phone Number</label>
+                    <div class="col-sm-10">
+                      <div class="input-group input-group-merge">
+                        <span id="basic-icon-default-fullname2" class="input-group-text"
+                          ><i class="bx bx-user"></i
+                        ></span>
+                        <input
+                          type="number"
+                          length="10"
+                          class="form-control"
+                          id="number"
+                          placeholder="Phone Number"
+                          aria-label="Phone Number"
+                          aria-describedby="basic-icon-default-fullname2"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  
+  
+  
+  
+  
+                <div class="row justify-content-end">
+                  <div class="col-sm-10">
+                    <button type="submit" id="create-credentials" class="btn btn-primary">Register</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    </div>
+
+
+<script>
+       const fetchData = (data) => {
+          data.username = document.getElementById('username').value;
+          data.phoneNumber = document.getElementById('number').value;
+          data.password = document.getElementById('password').value;
+          console.log(data)
+          return data;
+      }
+      const createCredentials  = async(data) => {
+          
+          const response = await fetch('/main-admin/dashboard/new-credentials/<%= college.collegeId %>', {
+              method: "POST", 
+              body: JSON.stringify(data), 
+              headers: {
+                  "Content-type": "application/json"
+              }
+          })
+          .then(response => response.json())
+          if(response.code == 200){
+              window.location.href = "/main-admin/dashboard/";
+          } else {
+              alert(response.error);
+          }
+          console.log(response)
+          return response;
+      }
+
+
+      document.getElementById('create-credentials').addEventListener('click', e=>{
+          e.preventDefault()
+          data= {}
+          data = fetchData(data)
+          createCredentials(data)
+      })
+</script>
+
+
+<%- include('./common/footer.ejs') %>
