@@ -57,9 +57,20 @@ const getAllStudentsByCollege = async(req, res) => {
 }
 
 
+const getStudentProfile = async(req, res) => {
+    try {
+        const student = await StudentsProfile.findOne({ enrollmentNumber: req.params.studentId })
+        return {student, error: ''}
+    } catch (error) {
+        return {error}
+    }
+}
+
+
 
 module.exports = {
     getAllStudentsByCollege,
     getAllStudentsByCollegeService,
-    getStudentByCourseIdAndCollegeService
+    getStudentByCourseIdAndCollegeService,
+    getStudentProfile
 }

@@ -1,8 +1,10 @@
 const router = require('express').Router()
-const { getAllStudentsByCollegeService, getStudentByCourseIdAndCollegeService } = require('../controllers/studentsController');
+const { getAllStudentsByCollegeService, getStudentByCourseIdAndCollegeService, getStudentProfile } = require('../controllers/studentsController');
 const Colleges = require('./../models/org/colleges')
 const Courses = require('./../models/org/courses')
 const Subjects = require('./../models/org/subjects')
+
+const TeacherProfile = require('./../models/teachersProfile');
 
 const { verifyAdmin } = require('./../services/verifyJwt');
 
@@ -35,9 +37,10 @@ router.get('/dashboard/:collegeId', verifyAdmin, async(req, res) => {
 
 
 router.get('/dashboard/:collegeId/view-teachers', verifyAdmin, async(req, res) => {
-
+    const teachers = await TeacherProfile.find({ collegeId: req.user.collegeId })
     return res.render('admin/viewTeachers', {
-        admin: req.user
+        admin: req.user,
+        teachers
     })
 })
 
@@ -140,6 +143,19 @@ router.get('/dashboard/:collegeId/students/:courseId', verifyAdmin, async(req, r
         students,
         courses,
         view: req.params.courseId
+    })
+})
+
+
+router.get('/dashboard/:collegId/student-profile/:studentId', verifyAdmin, async(req, res) => {
+    const { student, error } = await getStudentProfile(req, res);
+    if(error){
+        console.log(error)
+        return res.redirect('/dashboard')
+    }
+    return res.render('admin/studentProfile', {
+        student, 
+        admin: req.user
     })
 })
 

@@ -123,7 +123,7 @@
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Welcome to Net-Se! 👋</h4>
+              <h4 class="mb-2"><%= college.collegeName %>! 👋</h4>
               <p class="mb-4">Please sign-in to your Teacher's Dashboard to access your classes</p>
 
               <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
@@ -209,7 +209,41 @@
 
     <!-- Page JS -->
     <script>
-        
+         const fetchData = (data) => {
+          data.username = document.getElementById('signin-username').value;
+          data.password = document.getElementById('signin-password').value
+          return data;
+      }
+      const loginStudent = async(data) => {
+          
+          const response = await fetch('/admin/admin-login', {
+              method: "POST", 
+              body: JSON.stringify({
+                  username: data.username,
+                  password: data.password
+              }), 
+              headers: {
+                  "Content-type": "application/json"
+              }
+          })
+          .then(response => response.json())
+          if(response.status == 200){
+              document.cookie = `AuthToken=${response.AuthToken}; path=/`
+              window.location.href = "/admin/dashboard/<%= college.collegeId %>";
+
+          } else {
+              alert(response.error);
+          }
+          return response;
+      }
+
+
+      document.getElementById('formAuthentication').addEventListener('submit', e=>{
+          e.preventDefault()
+          data= {}
+          data = fetchData(data)
+          loginStudent(data)
+      })
     </script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
