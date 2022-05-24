@@ -1,11 +1,11 @@
-// const StudentUser = require('./../models/studentLogin')
+const StudentUser = require('./../models/studentLogin')
 // const StudentProfileSchema = require('./../models/studentProfile')
 
 const TeacherLogin = require('./../models/teacherLogin')
 const TeacherProfile = require('./../models/teachersProfile')
 
+const generateJwt = require('./../services/generateJwt')
 const bcrypt = require('bcrypt')
-const generateToken = require('./../services/generateJwt')
 
 
 
@@ -46,17 +46,20 @@ const registerTeacher = async(req, res) => {
 }
 
 
-const loginStudent = async(req, res) => {
-    try {
-        const studentUser = await StudentUser.findOne({ emailId: req.body.email })
 
-        if(!studentUser){
+const loginTeacher = async(req, res) => {
+    try {
+        console.log(req.body)
+
+        const teacher = await TeacherLogin.findOne({ emailId: req.body.email })
+
+        if(!teacher){
             return res.json({
                 status: 404,
-                error: "Student Not Found!"
+                error: "Teacher Not Found!"
             })
         }
-        const validPass = await bcrypt.compare(req.body.password, studentUser.password)
+        const validPass = await bcrypt.compare(req.body.password, teacher.password)
         if(!validPass){
             return res.json({
                 status: 401,
@@ -65,11 +68,7 @@ const loginStudent = async(req, res) => {
             })
         }
 
-        const token = await generateToken(studentUser);
-        
-        // res.cookie(`AuthToken`, token, {
-        //     httpOnly: true
-        // })
+        const token = await generateJwt(teacher);
 
         return res.json({
             status: 200,
@@ -83,6 +82,6 @@ const loginStudent = async(req, res) => {
 }
 
 module.exports = {
-    registerStudent,
-    loginStudent
+    registerTeacher,
+    loginTeacher
 }

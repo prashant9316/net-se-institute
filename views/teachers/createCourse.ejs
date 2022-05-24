@@ -1,0 +1,159 @@
+<%- include('./common/header.ejs') %>
+
+
+
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Forms/</span> Course</h4>
+
+    <!-- Basic Layout & Basic with Icons -->
+    <div class="row">
+      <!-- Basic with Icons -->
+      <div class="col-xxl">
+        <div class="card mb-4">
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">Add New Course</h5>
+            <small class="text-muted float-end">Fill in details for the New Course To Be Added</small>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Course Name</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-fullname2" class="input-group-text"
+                      ><i class="bx bx-user"></i
+                    ></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="courseName"
+                      placeholder="Course Name"
+                      aria-label="Course Name"
+                      aria-describedby="basic-icon-default-fullname2"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-company">Course</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-company2" class="input-group-text"
+                      ><i class="bx bx-buildings"></i
+                    ></span>
+                    <input
+                      type="text"
+                      id="basic-icon-default-company"
+                      class="form-control"
+                      placeholder="Course Assigned"
+                      aria-label="Course Assigned"
+                      aria-describedby="basic-icon-default-company2"
+                    />
+                  </div>
+                </div>
+              </div> -->
+              
+              <div class="row mb-3">
+                <label class="col-sm-2 form-label" for="basic-icon-default-phone">Course Duration</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-phone2" class="input-group-text"
+                      ><i class="bx bx-phone"></i
+                    ></span>
+                    <input
+                      type="number"
+                      id="courseDuration"
+                      class="form-control phone-mask"
+                      placeholder="4"
+                      aria-label="4"
+                      aria-describedby="basic-icon-default-phone2"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="mb-3 row">
+                <label for="html5-password-input" class="col-md-2 col-form-label">Password</label>
+                <div class="col-md-10">
+                  <input class="form-control" type="password" value="" placeholder="Enter Password" id="html5-password-input" />
+                </div>
+              </div> -->
+
+              <!-- <div class="row mb-3">
+                <label class="col-sm-2 form-label" for="basic-icon-default-message">Message</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-message2" class="input-group-text"
+                      ><i class="bx bx-comment"></i
+                    ></span>
+                    <textarea
+                      id="basic-icon-default-message"
+                      class="form-control"
+                      placeholder="Hi, Do you have a moment to talk Joe?"
+                      aria-label="Hi, Do you have a moment to talk Joe?"
+                      aria-describedby="basic-icon-default-message2"
+                    ></textarea>
+                  </div>
+                </div>
+              </div> -->
+              <div class="row justify-content-end">
+                <div class="col-sm-10">
+                  <button type="button" id="new-course" class="btn btn-primary">Add New Course</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const fetchData = (data) => {
+          data.courseName = document.getElementById('courseName').value;
+          data.courseDuration = document.getElementById('courseDuration').value;
+          console.log(data)
+          return data;
+      }
+      const addNewCourse = async(data) => {
+          
+          const response = await fetch('/admin/addNewCourse', {
+              method: "POST", 
+              body: JSON.stringify({
+                  courseName: data.courseName,
+                  courseDuration: data.courseDuration,
+                  collegeId: "<%= admin.collegeId %>"
+              }), 
+              headers: {
+                  "Content-type": "application/json"
+              }
+          })
+          .then(response => response.json())
+          if(response.status == 200){
+              window.location.href = "/admin/dashboard/<%= admin.collegeId %>/view-courses";
+
+          } else {
+              alert(response.error);
+          }
+          console.log(response)
+          return response;
+      }
+
+
+      document.getElementById('new-course').addEventListener('click', e=>{
+          // alert("button pressed!")
+          e.preventDefault()
+          data= {}
+          data = fetchData(data)
+          addNewCourse(data)
+      })
+
+    
+  </script>
+
+
+
+
+<%- include('./common/footer.ejs') %>

@@ -116,13 +116,13 @@
 
 
                     <li class="menu-item active">
-                        <a href="/admin/dashboard" class="menu-link">
+                        <a href="/teacher/dashboard/<%= teacher.collegeId %>" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Dashboard</div>
                         </a>
                     </li>
 
-
+<!-- 
                     <li class="menu-header small text-uppercase">
                         <span class="menu-header-text">Teachers</span>
                     </li>
@@ -140,7 +140,7 @@
                             <div data-i18n="Basic">Create New Teacher</div>
                         </a>
                     </li>
-
+ -->
 
 
 
@@ -152,18 +152,18 @@
                     </li>
 
                     <li class="menu-item">
-                        <a href="/admin/dashboard/view-courses" class="menu-link">
+                        <a href="/teacher/dashboard/<%= teacher.collegeId %>/view-courses" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">View All Courses</div>
                         </a>
                     </li>
 
-                    <li class="menu-item">
+                    <!-- <li class="menu-item">
                         <a href="/admin/dashboard/create-new-course" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Setup New Course</div>
                         </a>
-                    </li>
+                    </li> -->
 
 
 
@@ -175,27 +175,27 @@
                     </li>
 
                     <li class="menu-item">
-                        <a href="/admin/dashboard/view-all-subjects" class="menu-link">
+                        <a href="/teacher/dashboard/<%= teacher.collegeId %>/view-all-subjects" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">View All Subjects</div>
                         </a>
                     </li>
 
 
-                    <li class="menu-item">
-                      <a href="/admin/dashboard/manage-subjects" class="menu-link">
+                    <!-- <li class="menu-item">
+                      <a href="/teacher/dashboard/<%= teacher.collegeId %>/manage-subjects" class="menu-link">
                           <i class="menu-icon tf-icons bx bx-collection"></i>
                           <div data-i18n="Basic">Manage Subjects</div>
                       </a>
                   </li>
-                    
+                     -->
 
-                    <li class="menu-item">
-                        <a href="/admin/dashboard/create-new-subject" class="menu-link">
+                    <!-- <li class="menu-item">
+                        <a href="/teacher/dashboard/<%= teacher.collegeId %>/create-new-subject" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Setup New Subject</div>
                         </a>
-                    </li>
+                    </li> -->
 
 
 
@@ -208,15 +208,15 @@
                     </li>
 
                     <li class="menu-item">
-                        <a href="/admin/dashboard/view-all-students" class="menu-link">
+                        <a href="/teacher/dashboard/<%= teacher.collegeId %>/view-all-students" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">View All Students</div>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a href="/admin/dashboard/manage-students" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-collection"></i>
+                        <a href="/teacher/dashboard/<%= teacher.collegeId %>/manage-students" class="menu-link">
+                            <i class="enu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Manage Student Account</div>
                         </a>
                     </li>
@@ -230,38 +230,21 @@
                     </li>
 
                     <li class="menu-item">
-                        <a href="/admin/dashboard/account-settings" class="menu-link">
+                        <a href="/teacher/dashboard/<%= teacher.collegeId %>/account-settings" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Account Settings</div>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a href="/admin/dashboard/setup-college-account" class="menu-link">
+                        <a href="/teacher/dashboard/<%+ teacher.collegeId %>/setup-college-account" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Setup College Account</div>
                         </a>
                     </li>
 
 
-                    <script>
-                      document.getElementById('logout-button').addEventListener("click", async function(event) {
-                             console.log("Logged Out")
-                            event.preventDefault()
-                            removeCookies()
-                            window.location="/"
-                           })
-                  
-                           function removeCookies() {
-                              var res = document.cookie;
-                              var multiple = res.split(";");
-                              for(var i = 0; i < multiple.length; i++) {
-                                 var key = multiple[i].split("=");
-                                 document.cookie = key[0]+" =; expires = Thu, 01 Jan 1970 00:00:00 UTC; path=/";
-                              }
-                           }
-                  </script>
-
+                   
 
 
 
@@ -772,6 +755,24 @@
                         </ul>
                     </div>
                 </nav>
+
+                <script>
+                  document.getElementById('logout-button').addEventListener("click", async function(event) {
+                         console.log("Logged Out")
+                        event.preventDefault()
+                        removeCookies()
+                        window.location="/"
+                       })
+              
+                       function removeCookies() {
+                          var res = document.cookie;
+                          var multiple = res.split(";");
+                          for(var i = 0; i < multiple.length; i++) {
+                             var key = multiple[i].split("=");
+                             document.cookie = key[0]+" =; expires = Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+                          }
+                       }
+              </script>
 
 
                 

@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const TeacherProfile = require('./../models/teachersProfile')
 
 
 const verifyLoginRedirect = async(req, res, next) => {
@@ -56,7 +57,9 @@ const verifyTeacher = async(req, res, next) => {``
 
         const verified = jwt.verify(token, process.env.SECRET_TOKEN)
         if(verified.role == 'teacher'){
+            const teacherProfile = await TeacherProfile.findOne({ phoneNumber: verified.phoneNumber })
             req.user = verified;
+            req.user.profile = teacherProfile;
             next()
         }
         else {

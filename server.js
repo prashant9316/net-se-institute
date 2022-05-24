@@ -46,7 +46,7 @@ const AdminTeacherRouter = require('./src/routes/adminTeacherRouter')
 
 
 const TeacherIndexRouter = require('./src/vroutes/teacher')
-
+const TeacherAuthRouter = require('./src/routes/teachersAuth')
 
 
 const MainAdminIndexRouter = require('./src/vroutes/mainadmin')
@@ -69,8 +69,10 @@ app.use('/main-admin', MainAdminIndexRouter)
 app.use('/admin', AdminIndexRouter)
 app.use('/admin', AdminAuthRouter)
 app.use('/admin', AdminTeacherRouter)
-app.use('/teacher', TeacherIndexRouter)
 
+
+app.use('/teacher', TeacherIndexRouter)
+app.use('/teacher', TeacherAuthRouter)
 
 
 

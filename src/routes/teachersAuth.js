@@ -1,10 +1,9 @@
 const router = require('express').Router()
 
-const { registerStudent, loginStudent } = require('../controllers/studentAuthController')
+const {  loginTeacher } = require('../controllers/teachersAuthController')
 
-// router.post('/register-student', registerStudent)
 
-router.post('/teacher-login', loginStudent)
+router.post('/teacher-login', loginTeacher)
 
 
 module.exports = router
