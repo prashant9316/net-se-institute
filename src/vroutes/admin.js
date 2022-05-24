@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { getAllStudentsByCollegeService, getStudentByCourseIdAndCollegeService, getStudentProfile } = require('../controllers/studentsController');
+const { getAllStudentsByCollegeService, getStudentByCourseIdAndCollegeService, getStudentProfile, setSem } = require('../controllers/studentsController');
 const Colleges = require('./../models/org/colleges')
 const Courses = require('./../models/org/courses')
 const Subjects = require('./../models/org/subjects')
@@ -74,6 +74,9 @@ router.get('/dashboard/:collegeId/view-all-subjects', verifyAdmin, async(req, re
         selectedCourse: 'All'
     })
 })
+
+
+router.get('/api/set-sem', verifyAdmin, setSem)
 
 
 router.get('/dashboard/:collegeId/subject/:courseId/:year/:sem', verifyAdmin, async(req, res) => {

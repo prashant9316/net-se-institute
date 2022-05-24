@@ -33,6 +33,7 @@ const StudentProfileSchema = new mongoose.Schema({
         courseName: String,
         courseId: String,
         currentYear: Number,
+        sem: Number
     },
     age: {
         type: Number

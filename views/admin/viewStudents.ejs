@@ -37,6 +37,7 @@
               <th>Course</th>
               <th>Enroll no.</th>
               <th>Name</th>
+              <th>Sem</th>
               <th>Gender</th>
               <th>Profile</th>
               <th>Attendance</th>
@@ -49,6 +50,7 @@
               <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= students[i].course.courseName %></strong></td>
               <td><%= students[i].enrollmentNumber %></td>
               <td><%= students[i].name %></td>
+              <td><%= students[i].course.sem %></td>
               <td><%= students[i].gender %></td>
               <td>
                 <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">

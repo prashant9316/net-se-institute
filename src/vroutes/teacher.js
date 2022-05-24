@@ -105,13 +105,13 @@ router.get('/dashboard/:collegeId/manage-subject', verifyTeacher, async(req, res
     })
 })
 
-router.get('/dashboard/:collegeId/create-new-subject', verifyTeacher, async(req, res) => {
-    const courses = await Courses.find({ collegeId: req.user.collegeId })
-    return res.render('teachers/createSubject', {
-        teacher: req.user,
-        courses
-    })
-})
+// router.get('/dashboard/:collegeId/create-new-subject', verifyTeacher, async(req, res) => {
+//     const courses = await Courses.find({ collegeId: req.user.collegeId })
+//     return res.render('teachers/createSubject', {
+//         teacher: req.user,
+//         courses
+//     })
+// })
 
 router.get('/dashboard/:collegeId/view-all-students', verifyTeacher, async(req, res) => {
     const students = await getAllStudentsByCollegeService(req)
@@ -126,14 +126,18 @@ router.get('/dashboard/:collegeId/view-all-students', verifyTeacher, async(req, 
 
 
 router.get('/dashboard/:collegeId/students/:courseId', verifyTeacher, async(req, res) => {
-    const students = await getStudentByCourseIdAndCollegeService(req)
-    const courses = await Courses.find({ collegeId: req.user.collegeId })
-    return res.render('teachers/viewStudents', {
-        teacher: req.user,
-        students,
-        courses,
-        view: req.params.courseId
-    })
+    try {
+        const students = await getStudentByCourseIdAndCollegeService(req)
+        const courses = await Courses.find({ collegeId: req.user.collegeId })
+        return res.render('teachers/viewStudents', {
+            teacher: req.user,
+            students,
+            courses,
+            view: req.params.courseId
+        })
+    } catch (error) {
+        return res.redirect('/dashboard/'+req.params.collegeId)
+    }
 })
 
 
@@ -144,8 +148,8 @@ router.get('/dashboard/:collegId/student-profile/:studentId', verifyTeacher, asy
         return res.redirect('/teacher/dashboard')
     }
     return res.render('teachers/studentProfile', {
-        teacher, 
-        admin: req.user
+        teacher: req.user, 
+        student
     })
 })
 
