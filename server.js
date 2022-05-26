@@ -53,7 +53,7 @@ const MainAdminIndexRouter = require('./src/vroutes/mainadmin')
 
 
 app.get('/', async(req, res) => {
-    return res.send("Yo ")
+    return res.render("main-page")
 })
 
 app.get('/new-college', async(req, res) => {
