@@ -118,15 +118,17 @@
                                         <h4 class="card-title mb-2">200 </h4>
                                         <small class="text-success fw-semibold">
                                             <!-- <i class="bx bx-up-arrow-alt"></i> -->
+                                            <a href="/admin/dashboard/<%= admin.collegeId %>/view-all-students" class="text-success">
                                             View Students
+                                            </a>
                                         </small>
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="col-lg-6 col-md-12 col-6 mb-4">
+                                
                                 <div class="card">
-                                    <a href="/admin/dashboard/<%= admin.collegeId %>/view-teachers">
-
                                     <div class="card-body">
                                         <div class="card-title d-flex align-items-start justify-content-between">
                                             <div class="avatar flex-shrink-0">
@@ -149,11 +151,13 @@
                                         <h3 class="card-title text-nowrap mb-1">12</h3>
                                         <small class="text-success fw-semibold">
                                             <!-- <i class="bx bx-up-arrow-alt"></i>  -->
+                                            <a href="/admin/dashboard/<%= admin.collegeId %>/view-teachers" class="text-success">
                                             View Teachers
+                                            </a>
                                         </small>
                                     </div>
-                                    </a>
                                 </div>
+                           
                             </div>
                             <div class="col-6 mb-4">
                                 <div class="card">
@@ -178,7 +182,10 @@
                                         <span class="d-block mb-1">Courses</span>
                                         <h3 class="card-title text-nowrap mb-2">6</h3>
                                         <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i>
-                                            View Courses</small>
+                                            <a href="/admin/dashboard/<%= admin.collegeId %>/view-courses" class="text-danger">
+                                            View Courses
+                                            </a>
+                                        </small>
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +212,10 @@
                                         <span class="fw-semibold d-block mb-1">Subjects</span>
                                         <h3 class="card-title mb-2">50</h3>
                                         <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>
-                                            View Subjects</small>
+                                            <a href="/admin/dashboard/<%= admin.collegeId %>/view-all-subjects" class="text-success">
+                                                View Subjects
+                                                </a>
+                                        </small>
                                     </div>
                                 </div>
                             </div>
