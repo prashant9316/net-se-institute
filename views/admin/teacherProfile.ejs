@@ -1,0 +1,202 @@
+<%- include('./common/header.ejs') %>
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Teacher Profile /</span> <%= teacher.name %></h4>
+
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="nav nav-pills flex-column flex-md-row mb-3">
+          <li class="nav-item">
+            <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> Teacher's Profile</a>
+          </li>
+        </ul>
+        <div class="card mb-4">
+          <h5 class="card-header">Profile Details</h5>
+          <!-- Account -->
+          <div class="card-body">
+            <div class="d-flex align-items-start align-items-sm-center gap-4">
+              <img
+                src="/assets/img/avatars/1.png"
+                alt="user-avatar"
+                class="d-block rounded"
+                height="100"
+                width="100"
+                id="uploadedAvatar"
+              />
+              <div class="button-wrapper">
+                <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                  <span class="d-none d-sm-block">Upload new photo</span>
+                  <i class="bx bx-upload d-block d-sm-none"></i>
+                  <input
+                    type="file"
+                    id="upload"
+                    class="account-file-input"
+                    hidden
+                    accept="image/png, image/jpeg"
+                  />
+                </label>
+                <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                  <i class="bx bx-reset d-block d-sm-none"></i>
+                  <span class="d-none d-sm-block">Reset</span>
+                </button>
+
+                <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+              </div>
+            </div>
+          </div>
+          <hr class="my-0" />
+          <div class="card-body">
+            <form id="formAccountSettings" method="POST" onsubmit="return false">
+              <div class="row">
+                <div class="mb-3 col-md-6">
+                  <label for="firstName" class="form-label">Teacher's Name</label>
+                  <h3><%= teacher.name %></h3>
+                  
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label for="lastName" class="form-label">Phone Number</label>
+                  <h3><%= teacher.phoneNumber %></h3>
+                  </div>
+                <div class="mb-3 col-md-6">
+                  <label for="email" class="form-label">E-mail</label>
+                  <h3><%= teacher.emailId %></h3>
+                  
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label for="organization" class="form-label">Gender</label>
+                  <h3><%= teacher.gender %></h3>
+                 
+                </div>
+                
+                <div class="mb-3 col-md-6">
+                  <label for="address" class="form-label">Address</label>
+                  <input type="text" class="form-control" id="address" name="address" placeholder="Address" />
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label for="state" class="form-label">Age</label>
+                  <input class="form-control" type="text" id="age" name="state" placeholder="Age" value="<%= teacher.age %>" />
+                </div>
+              
+              </div>
+              <div class="mt-2">
+                <button type="submit" class="btn btn-primary me-2">Update changes</button>
+                <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="card">
+          <h5 class="card-header">Teacher's Subjects</h5>
+          <div class="card-body">
+            <form id="formAccountDeactivation" onsubmit="return false">
+                <div class="demo-inline-spacing">
+                <% for(var i = 0; i < teacher.subjects.length; i++) { %>
+                    <span class="badge bg-label-info">Subject <%= i+1 %></span>: <span class="badge bg-label-dark"><%= teacher.subjects[i].subjectName %> (Sem <%= teacher.subjects[i].sem %>)</span>
+                    <br>
+                    <% } %>
+                </div>
+              <div class="my-3 col-md-6">
+                <label for="exampleDataList" class="form-label">Select Subjects To Be Added: </label>
+                <input
+                  class="form-control"
+                  list="datalistOptions"
+                  id="exampleDataList"
+                  placeholder="Type to search..."
+                />
+                <datalist id="datalistOptions">
+                    <% for(var i= 0; i < subjects.length; i++) {%>
+                      <!-- <input type="text" id=""> -->
+                  <option value="<%= subjects[i].subjectId %>"><%= subjects[i].subjectName %> | <%= subjects[i].courseId %> | <%= subjects[i].sem %> Sem</option>
+                  <% } %>
+
+                </datalist>
+              </div>
+              
+              <button type="submit" class="btn btn-primary" id="add-subject-btn">Add Subject</button>
+            </form>
+            <div id="parent-subjects-added" class="demo-inline-spacing" style="margin-bottom: 10px;">
+              <!-- <span class="badge badge-center bg-primary" style="width: fit-content; padding: 1rem;" id="subject-counter">Something<button class="btn btn-info rounded-pill" style="padding: 0; margin: 0.5rem;" id="subject-${counter}-btn">&times;</button> </span> -->
+            </div>
+          </div>
+          
+          
+          <button id="update-subjects" class="btn btn-danger">Update to Profile</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Content -->
+
+  <div class="content-backdrop fade"></div>
+
+  <script>
+    let counter = 0;
+    let subjects = []
+    let allSubjects = JSON.parse('<%- JSON.stringify(subjects) %>')
+    subjects = subjects.concat(JSON.parse('<%- JSON.stringify(teacher.subjects) %>'))
+    // console.log(allSubjects)
+    console.log(allSubjects)
+    console.log(counter);
+    const container = document.getElementById('parent-subjects-added')
+    document.getElementById('add-subject-btn').addEventListener('click', async(e) => {
+      e.preventDefault()
+      const value = document.getElementById('exampleDataList').value;
+      let subject = allSubjects.find(sub => sub.subjectId == value)
+      let found = subjects.find(sub => sub.subjectId == value)
+      if(found){
+        console.log("Already in the list")
+        return;
+      }
+      subjects.push(subject)
+      console.log(value)
+      if(value == ''){
+        console.log("Please choose a subject from the list")
+        return;
+      }
+      let text = `<span class="badge badge-center bg-primary" style="width: fit-content; padding: 1rem;" id="subject-${counter}">${value}<button class="btn btn-info rounded-pill" style="padding: 0; margin: 0.5rem;" id="subject-${counter}-btn">&times;</button></span>`
+      console.log(text)
+      container.innerHTML += text;
+      document.getElementById(`subject-${counter}-btn`).addEventListener('click', async(e) => {
+        e.preventDefault()
+        
+        document.getElementById(`subject-${counter}`).innerHTML = '';
+      })
+      
+      counter++;
+    })
+
+    document.getElementById('update-subjects').addEventListener('click', async(e) => {
+      e.preventDefault()
+      console.log(subjects)
+      await fetch('/admin/assignsubjectToTeacher/<%= teacher._id %>', {
+        method: "POST",
+        body: JSON.stringify({subjects}),
+        headers: {
+                  "Content-type": "application/json"
+              }
+      })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+        if(res.code == 200){
+          alert("subjects updated Successfully!");
+          window.location.href = "/admin/dashboard/<%= admin.collegeId %>/teacher/<%= teacher.emailId %>";
+
+        } else {
+          alert("Failed to update!")
+          window.location.href = "/admin/dashboard/<%= admin.collegeId %>/teacher/<%= teacher.emailId %>";
+
+        }
+      })
+      .catch(err => {
+        console.err(err);
+        alert("Unable to updated!")
+      })
+    }) 
+  </script>
+
+
+
+<%- include('./common/footer.ejs') %>

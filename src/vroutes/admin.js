@@ -45,6 +45,17 @@ router.get('/dashboard/:collegeId/view-teachers', verifyAdmin, async(req, res) =
 })
 
 
+router.get('/dashboard/:collegeId/teacher/:teacherId', verifyAdmin, async(req, res) => {
+    const teacher = await TeacherProfile.findOne({ collegeId: req.user.collegeId, emailId: req.params.teacherId })
+    const subjects = await Subjects.find({})
+    return res.render('admin/teacherProfile', {
+        admin: req.user,
+        teacher,
+        subjects
+    })
+})
+
+
 
 router.get('/dashboard/:collegeId/create-new-teacher', verifyAdmin, async(req, res) => {
     return res.render('admin/createTeacher', {
@@ -76,7 +87,7 @@ router.get('/dashboard/:collegeId/view-all-subjects', verifyAdmin, async(req, re
 })
 
 
-router.get('/api/set-sem', verifyAdmin, setSem)
+// router.get('/api/set-sem', verifyAdmin, setSem)
 
 
 router.get('/dashboard/:collegeId/subject/:courseId/:year/:sem', verifyAdmin, async(req, res) => {

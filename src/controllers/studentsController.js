@@ -1,7 +1,6 @@
 const StudentsProfile = require('./../models/studentProfile')
 
 
-
 const setSem = async(req, res) => {
     try {
         const students = await StudentsProfile.find({})

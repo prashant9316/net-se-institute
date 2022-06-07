@@ -11,6 +11,10 @@ const Papers = new mongoose.Schema({
         type: String,
         default: shortid.generate
     },
+    pdfLink: {
+        type: String,
+        required: true
+    },
     paperYear: {
         type: String,
         required: true

@@ -25,6 +25,13 @@ const TeachersProfileSchema = new mongoose.Schema({
     },
     courseIds: [{
         courseId: String
+    }],
+    subjects: [{
+        subjectId: String,
+        courseId: String,
+        subjectName: String,
+        sem: Number,
+        year: Number
     }]
 })
 

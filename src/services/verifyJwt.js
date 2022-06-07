@@ -60,6 +60,7 @@ const verifyTeacher = async(req, res, next) => {``
             const teacherProfile = await TeacherProfile.findOne({ phoneNumber: verified.phoneNumber })
             req.user = verified;
             req.user.profile = teacherProfile;
+            // console.log(req.user)
             next()
         }
         else {

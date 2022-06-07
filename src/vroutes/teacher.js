@@ -4,7 +4,8 @@ const { getAllStudentsByCollegeService, getStudentByCourseIdAndCollegeService, g
 const { verifyTeacher } = require('../services/verifyJwt')
 
 const Subjects = require('./../models/org/subjects')
-const Courses = require('./../models/org/courses')
+const Courses = require('./../models/org/courses');
+const { getAllAssetsForSubjectWithIdService } = require('../controllers/subjectController');
 
 
 router.get('/login/:collegeId', async(req, res) => {
@@ -63,6 +64,44 @@ router.get('/dashboard/:collegeId/view-all-subjects', verifyTeacher, async(req, 
     } catch (error) {
         return res.json({ error })
     }
+})
+
+
+router.get('/dashboard/:collegeId/my-subjects', verifyTeacher, async(req, res) => {
+    try {
+        const subjects = await Subjects.find({})
+        const courses = await Courses.find({ collegeId: req.user.collegeId })
+        return res.render('teachers/mySubjects', {
+            teacher: req.user,
+            subjects: req.user.profile.subjects,
+            courses
+        })
+    } catch (error) {
+        return res.json({ error })
+    }
+})
+
+
+router.get('/dashboard/:collegeId/manage-subject/:subjectId', verifyTeacher, async(req, res) => {
+    try {
+        const { subject, announcements, notes, syllabus, papers, assignments, error} = await getAllAssetsForSubjectWithIdService(req)
+        if(error){
+            return res.redirect(401,'/teacher/dashboard')
+        }
+        return res.render('teachers/manageSubject', {
+            teacher: req.user, 
+            subject,
+            announcements, 
+            notes, 
+            syllabus,
+            papers,
+            assignments
+        })
+    } catch (error) {
+        return res.redirect(401,'/teacher/dashboard')
+
+    }
+    
 })
 
 

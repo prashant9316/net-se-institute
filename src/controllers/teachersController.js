@@ -3,7 +3,6 @@ const TeachersProfile = require('./../models/teachersProfile')
 const bcrypt = require('bcrypt')
 
 
-
 const registerNewTeacher = async(req, res) => {
     try {
         const emailExist = await TeachersLogin.findOne({ emailId: req.body.email })
@@ -45,6 +44,25 @@ const registerNewTeacher = async(req, res) => {
     }
 }
 
+const assignSubjectsToTeacher = async(req, res) => {
+    try {
+        const teacher = await TeachersProfile.findOneAndUpdate({ _id: req.params.id}, {
+            $set: {
+                subjects: req.body.subjects
+            }
+        })
+        return res.json({
+            status: 200,
+            code: 200,
+            message: "Assigned Subjects!"
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ error, code: 500 })
+    }
+}
+
 module.exports = {
-    registerNewTeacher
+    registerNewTeacher,
+    assignSubjectsToTeacher
 }
