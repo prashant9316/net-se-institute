@@ -57,7 +57,8 @@ const verifyTeacher = async(req, res, next) => {``
 
         const verified = jwt.verify(token, process.env.SECRET_TOKEN)
         if(verified.role == 'teacher'){
-            const teacherProfile = await TeacherProfile.findOne({ phoneNumber: verified.phoneNumber })
+            // console.log(verified)
+            const teacherProfile = await TeacherProfile.findOne({ emailId: verified.emailId })
             req.user = verified;
             req.user.profile = teacherProfile;
             // console.log(req.user)

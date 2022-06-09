@@ -10,6 +10,7 @@ const generateJwt = async(user) => {
             _id: user._id,
             phoneNumber: user.phoneNumber,
             role: user.role,
+            emailId: user.emailId,
             collegeId: user.collegeId
         }, 
         process.env.SECRET_TOKEN

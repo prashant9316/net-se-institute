@@ -59,6 +59,7 @@ const loginTeacher = async(req, res) => {
                 error: "Teacher Not Found!"
             })
         }
+        console.log(teacher)
         const validPass = await bcrypt.compare(req.body.password, teacher.password)
         if(!validPass){
             return res.json({
