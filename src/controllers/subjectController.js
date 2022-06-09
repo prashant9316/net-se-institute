@@ -24,7 +24,7 @@ const getAllAssetsForSubjectWithIdService = async(req) => {
         return { subject, announcements, notes, syllabus, papers, assignments, error: ''}
     } catch (error) {
         console.log(error)
-        return {announcements: '', notes:[], syllabus: '', error}
+        return {error}
     }
 }
 
