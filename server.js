@@ -48,7 +48,7 @@ const AdminTeacherRouter = require('./src/routes/adminTeacherRouter')
 const TeacherIndexRouter = require('./src/vroutes/teacher')
 const TeacherAuthRouter = require('./src/routes/teachersAuth')
 const TeacherSubjectApiRouter = require('./src/routes/subjectApi')
-
+const AttendanceApiRouter = require('./src/routes/attendanceApi')
 
 const MainAdminIndexRouter = require('./src/vroutes/mainadmin')
 
@@ -91,6 +91,7 @@ app.use('/admin', AdminTeacherRouter)
 app.use('/teacher', TeacherIndexRouter)
 app.use('/teacher', TeacherAuthRouter)
 app.use('/teacher', TeacherSubjectApiRouter)
+app.use('/teacher', AttendanceApiRouter)
 
 
 

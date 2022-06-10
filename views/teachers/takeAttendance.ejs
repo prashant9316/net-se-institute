@@ -1,0 +1,154 @@
+<%- include('./common/header.ejs') %>
+
+
+
+
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dashboard / Students /</span> Attendance </h4>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Take Attendance for Students of <%= subject.subjectName %></h5>
+        
+      <script>
+          let attendancePage = JSON.parse('<%- JSON.stringify(students) %>')
+            console.log(attendancePage)
+
+            let markAsPresent = (enrollNumber) => {
+                console.log(enrollNumber)
+                attendancePage.forEach(student => {
+                    console.log(student.enrollNumber == enrollNumber)
+
+                    if(student.enrollNumber == enrollNumber){
+                        student.attendance = 'P'
+                    }
+                });
+            }   
+
+            let markAsAbsent = (enrollNumber) => {
+                console.log(enrollNumber)
+
+                attendancePage.forEach(student => {
+                    console.log(student.enrollNumber == enrollNumber)
+                    if(student.enrollNumber == enrollNumber){
+                        student.attendance = 'A'
+                    }
+                });
+            }   
+      </script>
+      <button class="btn btn-success m-5" id="submit-btn-attendance">Submit Attendance</button>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>S. No.</th>
+              <th>Enroll no.</th>
+              <th>Name</th>
+              <th>Attendance</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+
+            <% for(var i = 0; i < students.length; i++) { %>
+                <tr>
+                  <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= i+1 %></strong></td>
+                  <td><%= students[i].enrollNumber %></td>
+                  <td ><%= students[i].name %></td>
+                  <td id="att-<%= students[i].enrollNumber %>"><%= students[i].attendance %></td>
+                  <td>
+                    <% if(students[i].attendance == 'P') {%>
+                        <button class="btn btn-success mx-2" id="btn-<%= students[i].enrollNumber %>">
+                            Mark As Absent
+                    </button>
+                    <% } else { %>
+                        <button class="btn btn-danger mx-2" id="btn-<%= students[i].enrollNumber %>">
+                        Mark As Present
+                    </button>
+                    <% }%>
+                  </td>
+                </tr>
+
+                <script>
+                    if('<%= students[i].attendance %>' == 'P' ){
+                        document.getElementById('att-<%= students[i].enrollNumber %>').style.color = 'green';
+                    } else {
+                        document.getElementById('att-<%= students[i].enrollNumber %>').style.color = 'red';
+                    }
+                    document.getElementById('btn-<%= students[i].enrollNumber %>').addEventListener('click', async(e) => {
+                        console.log(document.getElementById('btn-<%= students[i].enrollNumber %>').innerText)
+                        if(document.getElementById('btn-<%= students[i].enrollNumber %>').innerText == 'Mark As Present'){
+                            console.log("First running")
+                            document.getElementById('att-<%= students[i].enrollNumber %>').innerHTML = 'P'
+                            document.getElementById('att-<%= students[i].enrollNumber %>').style.color = 'green';
+                            document.getElementById('btn-<%= students[i].enrollNumber %>').innerHTML = 'Mark As Absent'
+                            document.getElementById('btn-<%= students[i].enrollNumber %>').className = 'btn btn-danger mx-2'
+                            markAsPresent('<%= students[i].enrollNumber %>')
+
+                        } else {
+                            console.log("Second running")
+                            document.getElementById('att-<%= students[i].enrollNumber %>').innerHTML = 'A'
+                            document.getElementById('btn-<%= students[i].enrollNumber %>').innerHTML = 'Mark As Present'
+                            document.getElementById('att-<%= students[i].enrollNumber %>').style.color = 'red';
+                            document.getElementById('btn-<%= students[i].enrollNumber %>').className = 'btn btn-success mx-2'
+                            markAsAbsent('<%= students[i].enrollNumber %>')
+                        }
+                        console.log(attendancePage)
+                    })
+
+
+                </script>
+                <% } %>
+          </tbody>
+        </table>
+        
+    </div>
+</div>
+
+</div>
+<button class="btn btn-success m-5" id="submit-btn-attendance-1">Submit Attendance</button>
+<script>
+    const submitAttendance = async(e) => {
+        e.preventDefault()
+        for(let i = 0; i < attendancePage.length; i++){
+            console.log(attendancePage[i].attendance)
+            if(attendancePage[i].attendance == 'N'){
+                attendancePage[i].attendance = 'A'
+            }
+        }
+        await fetch('/teacher/submitAttendance/<%= attendanceRegister.pageId %>', {
+            method: 'POST',
+            body: JSON.stringify({ attendancePage }),
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => res.json())
+        .then(res => {
+            if(res.code == 200){
+                alert("updated attendance");
+                window.location.href = '/teacher/dashboard/<%= teacher.collegeId %>/view-attendance/<%= attendanceRegister.pageId %>'
+            } else {
+                alert("Problem Updating!")
+            }
+        })
+        .catch(err => {
+            alert("Problem Updating!")
+        })
+    }
+    document.getElementById('submit-btn-attendance').addEventListener('click', async(e) => {
+        submitAttendance(e);
+    })
+    document.getElementById('submit-btn-attendance-1').addEventListener('click', async(e) => {
+        submitAttendance(e);
+    })
+
+
+</script>
+
+
+
+
+<%- include('./common/footer.ejs') %>

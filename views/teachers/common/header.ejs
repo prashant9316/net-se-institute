@@ -221,14 +221,22 @@
                         </a>
                     </li>
 
+                    
+
+
                     <li class="menu-item">
-                        <a href="/teacher/dashboard/<%= teacher.collegeId %>/manage-students" class="menu-link">
-                            <i class="enu-icon tf-icons bx bx-collection"></i>
-                            <div data-i18n="Basic">Manage Student Account</div>
-                        </a>
-                    </li>
+                      <a href="/teacher/dashboard/<%= teacher.collegeId %>/attendance-register" class="menu-link">
+                          <i class="menu-icon tf-icons bx bx-collection"></i>
+                          <div data-i18n="Basic">Attendance Register</div>
+                      </a>
+                  </li>
 
-
+                  <li class="menu-item">
+                    <a href="/teacher/dashboard/<%= teacher.collegeId %>/manage-students" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-collection"></i>
+                        <div data-i18n="Basic">Manage Students</div>
+                    </a>
+                </li>
 
 
 
@@ -716,8 +724,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">John Doe</span>
-                                                    <small class="text-muted">Admin</small>
+                                                    <span class="fw-semibold d-block"><%= teacher.profile.name %></span>
+                                                    <small class="text-muted">Teacher</small>
                                                 </div>
                                             </div>
                                         </a>

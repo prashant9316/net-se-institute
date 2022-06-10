@@ -1,4 +1,138 @@
 <%- include('./common/header.ejs') %>
 
 
+
+
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dashboard /</span> Students</h4>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Students of <%= subject.subjectName %></h5>
+      <div class="card">
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-md-8">
+              <small class="text-light fw-semibold">Course/Branch</small>
+              <div class="mt-3">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <!-- <button type="button" class="btn btn-outline-secondary" onclick="window.location.href = '/teacher/dashboard/<%= teacher.collegeId %>/view-all-students'">All</button> -->
+                  <% for(var i = 0; i < subjects.length; i++) {%>
+                    <button type="button" class="btn btn-outline-secondary" onclick="window.location.href = '/teacher/dashboard/<%= teacher.collegeId %>/manage-students/<%= subjects[i].subjectId %>'"><%= subjects[i].subjectName %></button>
+                  <% } %>
+                </div>
+              </div>
+                  <button type="button" class="btn btn-info my-2" id="create-attendance">Create New Page for Today's Attendance of Class <%= subject.subjectName %></button>
+                  <button type="button" class="btn btn-warning my-2" id="view-attendance" onclick="window.location.href = `/teacher/dashboard/<%= teacher.collegeId %>/attendance-register`">View Attendance for class <%= subject.subjectName %></button>
+
+            </div>
+          </div>
+        </div>
+        </div>
+
+        <script>
+            document.getElementById('create-attendance').addEventListener('click', async(e) => {
+                e.preventDefault()
+                await fetch('/teacher/createNewPage/<%= subject.subjectId %>', {
+                    method: "POST"
+                })
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res)
+                    if(res.code == 200){
+                        alert("Created Page for today's class! Now you can take attendance")
+                        window.location.href = `/teacher/dashboard/<%= teacher.collegeId %>/take-attendance/${res.pageId}`
+                    } else {
+                        alert("Error occured during operation")
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    alert("Error occured during operation")
+                })
+            })
+        </script>
+        
+      
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Enroll no.</th>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Profile</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+              <% for(var i = 0; i < students.length; i++) { %>
+            <tr>
+              <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= students[i].course.courseName %></strong></td>
+              <td><%= students[i].enrollmentNumber %></td>
+              <td><%= students[i].name %></td>
+              <td><%= students[i].gender %></td>
+              <td>
+                <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                  <!-- <li
+                    data-bs-toggle="tooltip"
+                    data-popup="tooltip-custom"
+                    data-bs-placement="top"
+                    class="avatar avatar-xs pull-up"
+                    title="Lilian Fuller"
+                  >
+                    <img src="/assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
+                  </li>
+                  <li
+                    data-bs-toggle="tooltip"
+                    data-popup="tooltip-custom"
+                    data-bs-placement="top"
+                    class="avatar avatar-xs pull-up"
+                    title="Sophia Wilkerson"
+                  >
+                    <img src="/assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
+                  </li> -->
+                  <li
+                    data-bs-toggle="tooltip"
+                    data-popup="tooltip-custom"
+                    data-bs-placement="top"
+                    class="avatar avatar-xs pull-up"
+                    title="<%= students[i].name %>"
+                  >
+                    <img src="/assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
+                  </li>
+                </ul>
+              </td>
+              <!-- <td><span class="badge bg-label-primary me-1">View</span></td> -->
+              <td>
+                <div class="dropdown">
+                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                    <i class="bx bx-dots-vertical-rounded"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/teacher/dashboard/<%= teacher.collegeId %>/student-profile/<%= students[i].enrollmentNumber %>"
+                      ><i class="bx bx-edit-alt me-1"></i> View Profile</a
+                    >
+                    <a class="dropdown-item" href="javascript:void(0);"
+                      ><i class="bx bx-trash me-1"></i> More</a
+                    >
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    </div>
+
+
+
+
+
 <%- include('./common/footer.ejs') %>

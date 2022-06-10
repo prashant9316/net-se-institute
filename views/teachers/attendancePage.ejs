@@ -1,0 +1,88 @@
+<%- include('./common/header.ejs') %>
+
+
+
+
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dashboard /</span> Students</h4>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Attendance Register 
+        <% if(subject) { %>
+            for <%= subject.subjectId %>
+        <% } %>
+      </h5>
+      <div class="card">
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-md-8">
+              <small class="text-light fw-semibold">Course/Branch</small>
+              <div class="mt-3">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <button type="button" class="btn btn-outline-secondary" onclick="window.location.href = '/teacher/dashboard/<%= teacher.collegeId %>/attendance-register'">All</button>
+                  <% for(var i = 0; i < subjects.length; i++) {%>
+                    <button type="button" class="btn btn-outline-secondary" onclick="window.location.href = '/teacher/dashboard/<%= teacher.collegeId %>/attendance-register/<%= subjects[i].subjectId %>'"><%= subjects[i].subjectName %></button>
+                  <% } %>
+                </div>
+              </div>
+                  
+            </div>
+          </div>
+        </div>
+        </div>
+      
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>S. No.</th>
+              <th>Subject Id</th>
+              <th>Course Id</th>
+              <th>Date </th>
+              <th>Time </th>
+              <th>View</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+              <% for(var i = 0; i < attendanceRegister.length; i++) { %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= attendanceRegister[i].subjectId %></td>
+              <td><%= attendanceRegister[i].courseId %></td>
+              <td><%= attendanceRegister[i].date.toLocaleDateString() %></td>
+              <td><%= attendanceRegister[i].date.toLocaleTimeString() %></td>
+              
+              <td><span class="badge bg-label-primary me-1 btn" onclick="window.location.href = '/teacher/dashboard/<%= teacher.collegeId %>/view-attendance/<%= attendanceRegister[i].pageId %>'">View</span></td>
+              <td>
+                <div class="dropdown">
+                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                    <i class="bx bx-dots-vertical-rounded"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/teacher/dashboard/<%= teacher.collegeId %>/take-attendance/<%= attendanceRegister[i].pageId %>"
+                      ><i class="bx bx-edit-alt me-1"></i> Edit Attendance</a
+                    >
+                    <a class="dropdown-item" href="javascript:void(0);"
+                      ><i class="bx bx-trash me-1"></i> Delete Attendance</a
+                    >
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    </div>
+
+
+
+
+
+<%- include('./common/footer.ejs') %>

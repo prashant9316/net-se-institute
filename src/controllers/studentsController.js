@@ -1,4 +1,5 @@
 const StudentsProfile = require('./../models/studentProfile')
+const Subjects = require('./../models/org/subjects')
 
 
 const setSem = async(req, res) => {
@@ -104,6 +105,18 @@ const getStudentProfile = async(req, res) => {
     }
 }
 
+const getStudentBySubjectId = async(req, res) => {
+    try {
+        const subject = await Subjects.findOne({ subjectId: req.params.subjectId })
+        // console.log(subject)
+        const students = await StudentsProfile.find({ "course.courseId": subject.courseId, "sem": subject.sem })
+        // console.log(students)
+        return {students}
+    } catch (error) {
+        return {error}
+    }
+}
+
 
 
 module.exports = {
@@ -111,5 +124,6 @@ module.exports = {
     getAllStudentsByCollegeService,
     getStudentByCourseIdAndCollegeService,
     getStudentProfile,
-    setSem
+    setSem,
+    getStudentBySubjectId
 }

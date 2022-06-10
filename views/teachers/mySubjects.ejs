@@ -6,7 +6,7 @@
 
 
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dashboard /</span> All Subjects</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dashboard /</span> My Subjects</h4>
 
     <!-- Basic Bootstrap Table -->
     <div class="card">
@@ -44,7 +44,10 @@
                       ><i class="bx bx-edit-alt me-1"></i> Edit</a
                     > -->
                     <a class="dropdown-item" href="/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subjects[i].subjectId %>"
-                      ><i class="bx bx-user me-1"></i> Manage</a
+                      ><i class="bx bx-user me-1"></i> Manage Subject</a
+                    >
+                    <a class="dropdown-item" href="/teacher/dashboard/<%= teacher.collegeId %>/manage-students/<%= subjects[i].subjectId %>"
+                      ><i class="bx bx-edit-alt me-1"></i> View Students</a
                     >
                   </div>
                 </div>
