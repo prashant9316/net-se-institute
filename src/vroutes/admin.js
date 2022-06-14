@@ -64,8 +64,11 @@ router.get('/dashboard/:collegeId/create-new-teacher', verifyAdmin, async(req, r
 })
 
 router.get('/dashboard/:collegeId/view-courses', verifyAdmin, async(req, res) => {
+    const courses = await Courses.find({ collegeId: req.params.collegeId })
+
     return res.render('admin/viewCourses', {
-        admin: req.user
+        admin: req.user,
+        courses
     })
 })
 

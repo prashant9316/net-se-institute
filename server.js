@@ -8,6 +8,9 @@ const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
 const path = require('path')
 
+var moment = require('moment-timezone');
+moment.tz.setDefault("Asia/Calcutta");
+
 const corsOption = {
     origin: "*", 
     methods: [
@@ -15,6 +18,7 @@ const corsOption = {
         'POST'
     ]
 }
+
 
 const app = express()
 
@@ -59,24 +63,6 @@ app.get('/', async(req, res) => {
 
 app.get('/new-college', async(req, res) => {
     return res.render('new-college')
-})
-
-
-const dataDesc = {
-    "key1": "In-store PCI", 
-    "key2": "Out-store PCI",
-    "key3": "Product Advertised Range Limit",
-    "key4": "Reactance Time",
-    "key5": "Product Purchased?",
-    "key6": "Priced Promotion?",
-    "key7": "Same Product Purchased or Other"
-}
-
-app.post('/api/v1/datasets/trial', async(req, res) =>{
-    return res.json({
-        code: 200,
-        dataDesc
-    })
 })
 
 app.use('/main-admin', MainAdminIndexRouter)

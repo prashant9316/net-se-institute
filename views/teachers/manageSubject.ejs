@@ -1,452 +1,421 @@
 <%- include('./common/header.ejs') %>
 
 
-    <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dashboard / Subject Dashboard /</span>
-            <%= subject.subjectName %></h4>
-        <h3 class="pb-1 mb-4"><%= subject.subjectName %> (<%= subject.subjectId %>) | Sem <%= subject.sem %> | <%= subject.courseId.toUpperCase() %> </h3>
-        <div class="row mb-5">
-            <div class="col-md-6 col-lg-4">
-                <div class="card text-center mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Paper</h5>
-                        <div class="col-lg-12 mb-4 mb-xl-0">
-                            <!-- <small class="text-light fw-semibold">Numbered</small> -->
-                            <div class="demo-inline-spacing mt-3">
-                              <ol class="list-group list-group-numbered">
-                                <% for(var i = 0; i< papers.length; i++) { %> 
-                                <a href="<%= papers[i].pdfLink %>" class="my-1" target="_blank"><li class="list-group-item"><%= papers[i].paperTitle %> | <%= papers[i].paperYear %> | Sem <%= subject.sem %></li></a>
-                                <% } %>
-                              </ol>
-                            </div>
-                          </div>
-                          <div class="mb-3"></div>
-                          <hr>
-                          <h5>Upload More!</h5>
-                          <div class="input-group mb-2" >
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="paper-title"
-                              aria-describedby="inputGroupFileAddon04"
-                              aria-label=""
-                              placeholder="Paper Title"
-                            />
-                          </div>
-                          <div class="input-group mb-2" >
-                            <input
-                              type="number"
-                              class="form-control"
-                              id="paper-year"
-                              aria-describedby="inputGroupFileAddon04"
-                              aria-label=""
-                              placeholder="Paper Year"
-                            />
-                          </div>
-                          <div class="input-group">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="paper-link"
-                              aria-describedby="inputGroupFileAddon04"
-                              aria-label="Upload"
-                              placeholder="Paste Link Here!"
-                            />
-                          </div>
-                          <div class="mb-2"></div>
-                        <a href="javascript:void(0)" id="upload-paper-btn" class="btn btn-primary">Upload</a>
-                  </div>
-                </div>
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dashboard / Subject Dashboard /</span>
+      <%= subject.subjectName %>
+    </h4>
+    <h3 class="pb-1 mb-4">
+      <%= subject.subjectName %> (<%= subject.subjectId %>) | Sem <%= subject.sem %> | <%=
+              subject.courseId.toUpperCase() %>
+    </h3>
+    <div class="row mb-5">
+      <div class="col-md-6 col-lg-4">
+        <div class="card text-center mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Paper</h5>
+            <div class="col-lg-12 mb-4 mb-xl-0">
+              <!-- <small class="text-light fw-semibold">Numbered</small> -->
+              <div class="demo-inline-spacing mt-3">
+                <ol class="list-group list-group-numbered">
+                  <% for(var i=0; i< papers.length; i++) { %>
+                    <a href="<%= papers[i].pdfLink %>" class="my-1" target="_blank">
+                      <li class="list-group-item">
+                        <%= papers[i].paperTitle %> | <%= papers[i].paperYear %> | Sem <%= subject.sem %>
+                      </li>
+                    </a>
+                    <% } %>
+                </ol>
+              </div>
             </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="card text-end mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Notes</h5>
-                        
-                        
-                            <h5 class="card-header">Previously Uploaded</h5>
-                            <div class="table-responsive text-nowrap">
-                              <table class="table table-sm">
-                                <thead>
-                                  <tr>
-                                    <th>Name</th>
-                                    <th>View</th>
-                                    <th></th>
-                                  </tr>
-                                </thead>
-                                <tbody class="table-border-bottom-0">
-                                    <% for(var i = 0; i < notes.length; i++) { %>
-                                  <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= notes[i].noteTitle %></strong></td>
-                                    <td><a href="<%= notes[i].pdfLink %>" target="_blank"><span class="badge bg-label-primary me-1">View</span></a> </td>
-                                    
-                                    
-                                    <td>
-                                      <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                          <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                          <a class="dropdown-item" href="javascript:void(0);"
-                                            ><i class="bx bx-edit-alt me-1"></i> Edit</a
-                                          >
-                                          <a class="dropdown-item" href="javascript:void(0);"
-                                            ><i class="bx bx-trash me-1"></i> Delete</a
-                                          >
-                                        </div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                  <% } %>
-                                  
-                                 
-                                </tbody>
-                              </table>
-                            </div>
-                            
-
-                            <div class="mb-3"></div>
-                            <hr>
-                            <h5>Upload Notes!</h5>
-                            <div class="input-group mb-2" >
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="note-title"
-                                aria-describedby="inputGroupFileAddon04"
-                                aria-label=""
-                                placeholder="Title of the Note"
-                              />
-                            </div>
-                            <div class="input-group">
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="note-link"
-                                aria-describedby="inputGroupFileAddon04"
-                                aria-label="Upload"
-                                placeholder="Paste Link Here!"
-                              />
-                            </div>
-                            <div class="mb-2"></div>
-                          <a href="javascript:void(0)" id="upload-notes-btn" class="btn btn-primary">Upload</a>
-                    </div>
-                </div>
+            <div class="mb-3"></div>
+            <hr>
+            <h5>Upload More!</h5>
+            <div class="input-group mb-2">
+              <input type="text" class="form-control" id="paper-title" aria-describedby="inputGroupFileAddon04"
+                aria-label="" placeholder="Paper Title" />
             </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Syllabus</h5>
-                        <% if(syllabus) {%>
-                        <a href="<%= syllabus.pdfLink %>" target="_blank"><p class="card-text">View Syllabus <%= syllabus.syllabusTitle %></p></a> 
-                        <% }%>
-                        <hr>
-                        <h5>Upload/Update Syllabus !</h5>
-                            <div class="input-group mb-2" >
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="syllabus-title"
-                                aria-describedby="inputGroupFileAddon04"
-                                aria-label=""
-                                placeholder="Title"
-                              />
-                            </div>
-                        <div class="input-group mb-2">
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="syllabus-link"
-                            aria-describedby="inputGroupFileAddon04"
-                            aria-label="Upload"
-                            placeholder="Paste Link Here!"
-                          />
-                        </div>
-                        <a href="javascript:void(0)" id="upload-syllabus-btn" class="btn btn-primary">Upload Syllabus</a>
-                    </div>
-                </div>
+            <div class="input-group mb-2">
+              <input type="number" class="form-control" id="paper-year" aria-describedby="inputGroupFileAddon04"
+                aria-label="" placeholder="Paper Year" />
             </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card text-end mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Assignemnts</h5>
-                        
-                        
-                            <h5 class="card-header">Previously Uploaded</h5>
-                            <div class="table-responsive text-nowrap">
-                              <table class="table table-sm">
-                                <thead>
-                                  <tr>
-                                    <th>Name</th>
-                                    <th>View</th>
-                                    <th></th>
-                                  </tr>
-                                </thead>
-                                <tbody class="table-border-bottom-0">
-                                    <% for(var i = 0; i < assignments.length; i++) { %>
-                                  <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= assignments[i].assignmentTitle %></strong></td>
-                                    <td><a href="<%= assignments[i].pdfLink %>" target="_blank"> <span class="badge bg-label-primary me-1">View</span></a></td>
-                                    
-                                    
-                                    <td>
-                                      <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                          <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                          <a class="dropdown-item" href="javascript:void(0);"
-                                            ><i class="bx bx-edit-alt me-1"></i> Edit</a
-                                          >
-                                          <a class="dropdown-item" href="javascript:void(0);"
-                                            ><i class="bx bx-trash me-1"></i> Delete</a
-                                          >
-                                        </div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                  <% } %>
-                                  
-                                 
-                                </tbody>
-                              </table>
-                            </div>
-                            
-
-                            <div class="mb-3"></div>
-                            <hr>
-                            <h5>Upload Assignemnts!</h5>
-                            <div class="input-group mb-2" >
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="assign-title"
-                                aria-describedby="inputGroupFileAddon04"
-                                aria-label=""
-                                placeholder="Title of the Assignemnt"
-                              />
-                            </div>
-                            <div class="input-group">
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="assign-link"
-                                aria-describedby="inputGroupFileAddon04"
-                                aria-label="Upload"
-                                placeholder="Paste Link Here!"
-                              />
-                            </div>
-                            <div class="mb-2"></div>
-                          <a href="javascript:void(0)" id="upload-assign-btn" class="btn btn-primary">Upload</a>
-                   </div>
-                </div>
+            <div class="input-group">
+              <input type="text" class="form-control" id="paper-link" aria-describedby="inputGroupFileAddon04"
+                aria-label="Upload" placeholder="Paste Link Here!" />
             </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Announcements</h5>
-                        <div class="demo-inline-spacing mt-3">
-                          <ol class="list-group list-group-numbered">
-                            <% for(var i = 0; i< announcements.length; i++) { %> 
-                            <li class="list-group-item my-2"><b><%= announcements[i].title %> </b><hr><%= announcements[i].announcement %> <hr>By <b><%= announcements[i].announcementBy %></b> | <%= announcements[i].time.toLocaleTimeString() %>, <%= announcements[i].time.toLocaleDateString() %></li>
-                            <% } %>
-                          </ol>
-                        </div>
-                        <h5 class="my-2">Announce:</h5>
-                        <div class="mb-3 row">
-                          <div class="input-group mb-2" >
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="announce-title"
-                              aria-describedby="inputGroupFileAddon04"
-                              aria-label=""
-                              placeholder="Topic"
-                            />
-                          </div>
-                          <div class="input-group">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="announcement"
-                              aria-describedby="inputGroupFileAddon04"
-                              aria-label="Upload"
-                              placeholder="Announcement"
-                              value="Announcement: "
-                            />
-                          </div>
-                          <div class="mb-2"></div>
-                        <a href="javascript:void(0)" id="upload-announce-btn" class="btn btn-primary">Announce</a>
-                 </div>
-                </div>
-            </div>
-
+            <div class="mb-2"></div>
+            <a href="javascript:void(0)" id="upload-paper-btn" class="btn btn-primary">Upload</a>
+          </div>
         </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card text-end mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Notes</h5>
+
+
+            <h5 class="card-header">Previously Uploaded</h5>
+            <div class="table-responsive text-nowrap">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>View</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                  <% for(var i=0; i < notes.length; i++) { %>
+                    <tr>
+                      <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>
+                          <%= notes[i].noteTitle %>
+                        </strong></td>
+                      <td><a href="<%= notes[i].pdfLink %>" target="_blank"><span
+                            class="badge bg-label-primary me-1">View</span></a> </td>
+
+
+                      <td>
+                        <div class="dropdown">
+                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                          </button>
+                          <div class="dropdown-menu">
+                            <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>
+                              Edit</a>
+                            <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>
+                              Delete</a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <% } %>
+
+
+                </tbody>
+              </table>
+            </div>
+
+
+            <div class="mb-3"></div>
+            <hr>
+            <h5>Upload Notes!</h5>
+            <div class="input-group mb-2">
+              <input type="text" class="form-control" id="note-title" aria-describedby="inputGroupFileAddon04"
+                aria-label="" placeholder="Title of the Note" />
+            </div>
+            <div class="input-group">
+              <input type="text" class="form-control" id="note-link" aria-describedby="inputGroupFileAddon04"
+                aria-label="Upload" placeholder="Paste Link Here!" />
+            </div>
+            <div class="mb-2"></div>
+            <a href="javascript:void(0)" id="upload-notes-btn" class="btn btn-primary">Upload</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Syllabus</h5>
+            <% if(syllabus) {%>
+              <a href="<%= syllabus.pdfLink %>" target="_blank">
+                <p class="card-text">View Syllabus <%= syllabus.syllabusTitle %>
+                </p>
+              </a>
+              <% }%>
+                <hr>
+                <h5>Upload/Update Syllabus !</h5>
+                <div class="input-group mb-2">
+                  <input type="text" class="form-control" id="syllabus-title" aria-describedby="inputGroupFileAddon04"
+                    aria-label="" placeholder="Title" />
+                </div>
+                <div class="input-group mb-2">
+                  <input type="text" class="form-control" id="syllabus-link" aria-describedby="inputGroupFileAddon04"
+                    aria-label="Upload" placeholder="Paste Link Here!" />
+                </div>
+                <a href="javascript:void(0)" id="upload-syllabus-btn" class="btn btn-primary">Upload Syllabus</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card text-end mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Assignemnts</h5>
+
+
+            <h5 class="card-header">Previously Uploaded</h5>
+            <div class="table-responsive text-nowrap">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>View</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                  <% for(var i=0; i < assignments.length; i++) { %>
+                    <tr>
+                      <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>
+                          <%= assignments[i].assignmentTitle %>
+                        </strong></td>
+                      <td><a href="<%= assignments[i].pdfLink %>" target="_blank"> <span
+                            class="badge bg-label-primary me-1">View</span></a></td>
+
+
+                      <td>
+                        <div class="dropdown">
+                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                          </button>
+                          <div class="dropdown-menu">
+                            <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>
+                              Edit</a>
+                            <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>
+                              Delete</a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <% } %>
+
+
+                </tbody>
+              </table>
+            </div>
+
+
+            <div class="mb-3"></div>
+            <hr>
+            <h5>Upload Assignemnts!</h5>
+            <div class="input-group mb-2">
+              <input type="text" class="form-control" id="assign-title" aria-describedby="inputGroupFileAddon04"
+                aria-label="" placeholder="Title of the Assignemnt" />
+            </div>
+            <div class="input-group">
+              <input type="text" class="form-control" id="assign-link" aria-describedby="inputGroupFileAddon04"
+                aria-label="Upload" placeholder="Paste Link Here!" />
+            </div>
+            <div class="mb-2"></div>
+            <a href="javascript:void(0)" id="upload-assign-btn" class="btn btn-primary">Upload</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Announcements</h5>
+            <div class="demo-inline-spacing mt-3">
+              <ol class="list-group list-group-numbered">
+                <% for(var i=announcements.length-1; i> announcements.length-3; i--) { %>
+                  <li class="list-group-item my-2"><b>
+                      <%= announcements[i].title %>
+                    </b>
+                    <hr>
+                    <%= announcements[i].announcement %>
+                      <hr>By <b>
+                        <%= announcements[i].announcementBy %>
+                      </b> | <%= announcements[i].time.toLocaleTimeString() %>, <%=
+                          announcements[i].time.toLocaleDateString() %>
+                  </li>
+                  <% } %>
+              </ol>
+            </div>
+            <h5 class="my-2">Announce:</h5>
+            <div class="mb-3 row">
+              <div class="input-group mb-2">
+                <input type="text" class="form-control" id="announce-title" aria-describedby="inputGroupFileAddon04"
+                  aria-label="" placeholder="Topic" />
+              </div>
+              <div class="input-group">
+                <input type="text" class="form-control" id="announcement" aria-describedby="inputGroupFileAddon04"
+                  aria-label="Upload" placeholder="Announcement" value="Announcement: " />
+              </div>
+              <div class="mb-2"></div>
+              <a href="javascript:void(0)" id="upload-announce-btn" class="btn btn-primary">Announce</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card text-center">
+          <div class="card-header">Featured</div>
+          <div class="card-body">
+            <h5 class="card-title">Open ChatRoom for this class!</h5>
+            <p class="card-text">First Login Using your student account on Net-Se Student Portal!</p>
+            <a target="_blank" href="http://net-se.com/college-login" class="btn btn-primary">Login</a>
+            <p class="card-text my-2">Then Click here to access the chatroom!</p>
+            <a target="_blank" href="http://net-se.com/subject-dashboard/<%= subject.subjectId %>/chatroom" class="btn btn-primary">View</a>
+          </div>
+          <div class="card-footer text-muted">SubjectId: <%= subject.subjectId %></div>
+        </div>
+      </div>
     </div>
 
     <script>
 
-// NOTES UPLOAD
-      document.getElementById('upload-notes-btn').addEventListener('click', async(e) => {
+      // NOTES UPLOAD
+      document.getElementById('upload-notes-btn').addEventListener('click', async (e) => {
         e.preventDefault()
         await fetch('/teacher/addNotes/<%= subject.subjectId %>', {
-          method: "POST", 
+          method: "POST",
           body: JSON.stringify({
             title: document.getElementById('note-title').value,
             link: document.getElementById('note-link').value
           }),
           headers: {
-              "Content-type": "application/json"
+            "Content-type": "application/json"
           }
         })
-        .then(res => res.json())
-        .then(res => {
-          if(res.code == 200){
-            alert("Updated Notes!")
-            window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-          } else {
+          .then(res => res.json())
+          .then(res => {
+            if (res.code == 200) {
+              alert("Updated Notes!")
+              window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
+            } else {
+              alert("Failed to Update!")
+              window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
+
+            }
+          })
+          .catch(err => {
             alert("Failed to Update!")
             window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-
-          }
-        })
-        .catch(err => {
-          alert("Failed to Update!")
-          window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-        })
-      }) 
+          })
+      })
 
 
 
-// ASSIGNMENT UPLOAD
-      document.getElementById('upload-assign-btn').addEventListener('click', async(e) => {
+      // ASSIGNMENT UPLOAD
+      document.getElementById('upload-assign-btn').addEventListener('click', async (e) => {
         e.preventDefault()
         await fetch('/teacher/addAssign/<%= subject.subjectId %>', {
-          method: "POST", 
+          method: "POST",
           body: JSON.stringify({
             title: document.getElementById('assign-title').value,
             link: document.getElementById('assign-link').value
           }),
           headers: {
-              "Content-type": "application/json"
+            "Content-type": "application/json"
           }
         })
-        .then(res => res.json())
-        .then(res => {
-          if(res.code == 200){
-            alert("Updated Assignments!")
-            window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-          } else {
+          .then(res => res.json())
+          .then(res => {
+            if (res.code == 200) {
+              alert("Updated Assignments!")
+              window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
+            } else {
+              alert("Failed to Update!")
+              window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
+
+            }
+          })
+          .catch(err => {
             alert("Failed to Update!")
             window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-
-          }
-        })
-        .catch(err => {
-          alert("Failed to Update!")
-          window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-        })
-      }) 
+          })
+      })
 
 
 
       // SYLLABUS UPLOAD
-      document.getElementById('upload-syllabus-btn').addEventListener('click', async(e) => {
+      document.getElementById('upload-syllabus-btn').addEventListener('click', async (e) => {
         e.preventDefault()
         await fetch('/teacher/addSyllabus/<%= subject.subjectId %>', {
-          method: "POST", 
+          method: "POST",
           body: JSON.stringify({
             title: document.getElementById('syllabus-title').value,
             link: document.getElementById('syllabus-link').value
           }),
           headers: {
-              "Content-type": "application/json"
+            "Content-type": "application/json"
           }
         })
-        .then(res => res.json())
-        .then(res => {
-          if(res.code == 200){
-            alert("Updated syllabus!")
-            window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-          } else {
+          .then(res => res.json())
+          .then(res => {
+            if (res.code == 200) {
+              alert("Updated syllabus!")
+              window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
+            } else {
+              alert("Failed to Update!")
+              window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
+
+            }
+          })
+          .catch(err => {
             alert("Failed to Update!")
             window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-
-          }
-        })
-        .catch(err => {
-          alert("Failed to Update!")
-          window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-        })
-      }) 
+          })
+      })
 
 
 
       // PAPER UPLOAD
-      document.getElementById('upload-paper-btn').addEventListener('click', async(e) => {
+      document.getElementById('upload-paper-btn').addEventListener('click', async (e) => {
         e.preventDefault()
         await fetch('/teacher/addPaper/<%= subject.subjectId %>', {
-          method: "POST", 
+          method: "POST",
           body: JSON.stringify({
             title: document.getElementById('paper-title').value,
             link: document.getElementById('paper-link').value,
             paperYear: document.getElementById('paper-year').value,
           }),
           headers: {
-              "Content-type": "application/json"
+            "Content-type": "application/json"
           }
         })
-        .then(res => res.json())
-        .then(res => {
-          if(res.code == 200){
-            alert("Updated Papers!")
-            window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-          } else {
+          .then(res => res.json())
+          .then(res => {
+            if (res.code == 200) {
+              alert("Updated Papers!")
+              window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
+            } else {
+              alert("Failed to Update!")
+              window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
+
+            }
+          })
+          .catch(err => {
             alert("Failed to Update!")
             window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-
-          }
-        })
-        .catch(err => {
-          alert("Failed to Update!")
-          window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-        })
-      }) 
+          })
+      })
 
 
-      
+
       // ANNOUNCE
-      document.getElementById('upload-announce-btn').addEventListener('click', async(e) => {
+      document.getElementById('upload-announce-btn').addEventListener('click', async (e) => {
         e.preventDefault()
         await fetch('/teacher/addAnnouncement/<%= subject.subjectId %>', {
-          method: "POST", 
+          method: "POST",
           body: JSON.stringify({
             title: document.getElementById('announce-title').value,
             announcement: document.getElementById('announcement').value
           }),
           headers: {
-              "Content-type": "application/json"
+            "Content-type": "application/json"
           }
         })
-        .then(res => res.json())
-        .then(res => {
-          if(res.code == 200){
-            alert("Announcement Created!")
-            window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-          } else {
+          .then(res => res.json())
+          .then(res => {
+            if (res.code == 200) {
+              alert("Announcement Created!")
+              window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
+            } else {
+              alert("Failed to Update!")
+              window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
+
+            }
+          })
+          .catch(err => {
             alert("Failed to Update!")
             window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-
-          }
-        })
-        .catch(err => {
-          alert("Failed to Update!")
-          window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/manage-subject/<%= subject.subjectId %>";
-        })
-      }) 
+          })
+      })
 
 
     </script>

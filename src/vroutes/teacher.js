@@ -7,7 +7,7 @@ const Subjects = require('./../models/org/subjects')
 const Courses = require('./../models/org/courses');
 const Attendance = require('./../models/dashboard/attendance')
 const { getAllAssetsForSubjectWithIdService } = require('../controllers/subjectController');
-const { getAttendanceRegister, getAttendanceRegisterBySubjectId, getAttendanceRegisterByTeacher } = require('../controllers/attendanceController');
+const { getAttendanceRegister, getAttendanceRegisterBySubjectId, getAttendanceRegisterByTeacher, attendanceCountBySubjectId } = require('../controllers/attendanceController');
 
 
 router.get('/login/:collegeId', async(req, res) => {
@@ -33,6 +33,7 @@ router.get('/dashboard', verifyTeacher, async(req, res) => {
     })
 })
 
+
 router.get('/dashboard/:collegeId', verifyTeacher, async(req, res) => {
     return res.render('teachers/dashboard', {
         teacher: req.user
@@ -42,16 +43,25 @@ router.get('/dashboard/:collegeId', verifyTeacher, async(req, res) => {
 
 
 router.get('/dashboard/:collegeId/view-courses', verifyTeacher, async(req, res) => {
-    return res.render('teachers/viewCourses', {
-        teacher: req.user
-    })
+    try {
+        const courses = await Courses.find({ collegeId: req.params.collegeId })
+    
+        return res.render('teachers/viewCourses', {
+            teacher: req.user,
+            courses
+        })
+    } catch (error) {
+        return res.redirect(`/admin/dashboard/${req.params.collegeId}/`)
+    }
 })
+
 
 // router.get('/dashboard/:collegeId/create-new-course', verifyTeacher, async(req, res) => {
 //     return res.render('teachers/createCourse', {
 //         teacher: req.user
 //     })
 // })
+
 
 router.get('/dashboard/:collegeId/view-all-subjects', verifyTeacher, async(req, res) => {
     try {
@@ -104,9 +114,9 @@ router.get('/dashboard/:collegeId/manage-subject/:subjectId', verifyTeacher, asy
     } catch (error) {
         return res.redirect(401,'/teacher/dashboard')
 
-    }
-    
+    }    
 })
+
 
 
 router.get('/dashboard/:collegeId/subject/:courseId/:year/:sem', verifyTeacher, async(req, res) => {
@@ -142,6 +152,8 @@ router.get('/dashboard/:collegeId/subject/:courseId/:year/:sem', verifyTeacher, 
     })
 })
 
+
+
 router.get('/dashboard/:collegeId/manage-subject', verifyTeacher, async(req, res) => {
     return res.render('teachers/manageSubject', {
         teacher: req.user
@@ -168,6 +180,7 @@ router.get('/dashboard/:collegeId/view-all-students', verifyTeacher, async(req, 
 })
 
 
+
 router.get('/dashboard/:collegeId/students/:courseId', verifyTeacher, async(req, res) => {
     try {
         const students = await getStudentByCourseIdAndCollegeService(req)
@@ -184,21 +197,28 @@ router.get('/dashboard/:collegeId/students/:courseId', verifyTeacher, async(req,
 })
 
 
+
 router.get('/dashboard/:collegId/student-profile/:studentId', verifyTeacher, async(req, res) => {
     const { student, error } = await getStudentProfile(req, res);
+    const subjects = await Subjects.find({ 
+        courseId: student.course.courseId,
+        collegeId: student.collegeId.toLowerCase(),
+        sem: student.course.sem
+    })
     if(error){
         console.log(error)
         return res.redirect('/teacher/dashboard')
     }
     return res.render('teachers/studentProfile', {
         teacher: req.user, 
-        student
+        student,
+        subjects
     })
 })
 
 
+
 router.get('/dashboard/:collegeId/manage-students', verifyTeacher, async(req, res) => {
-    
     return res.redirect(`/teacher/dashboard/${req.user.collegeId}/manage-students/${req.user.profile.subjects[0].subjectId}`)
 })
 
@@ -219,6 +239,27 @@ router.get('/dashboard/:collegeId/manage-students/:subjectId', verifyTeacher, as
         subjects: req.user.profile.subjects,
         subject
     })
+})
+
+
+router.get('/dashboard/:collegeId/view-student-attendance/:studentId', verifyTeacher, async(req, res) => {
+    try {
+        const { student, error } = await getStudentProfile(req, res);
+
+        if(error){
+            console.log(error)
+            return res.redirect(404, '/teacher/dashboad/')
+        }
+        const attendanceByStudent = await attendanceCountBySubjectId(req);
+        console.log(attendanceByStudent)
+        return res.render('teachers/studentAttendance', {
+            teacher: req.user,
+            student,
+            attendance: attendanceByStudent
+        })
+    } catch (error) {
+        return res.redirect(`/admin/dashboard/${req.params.collegeId}`)
+    }
 })
 
 
@@ -301,6 +342,15 @@ router.get('/dashboard/:collegeId/attendance-register/:subjectId', verifyTeacher
         view: 'None'
     })
 })
+
+
+
+router.get('/dashboard/:collegeId/account-settings', verifyTeacher, async(req, res) => {
+    return res.render('teachers/accountSettings', {
+        teacher: req.user
+    })
+})
+
 
 
 module.exports = router

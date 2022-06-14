@@ -1,0 +1,173 @@
+<%- include('./common/header.ejs') %>
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dashboard /</span> Account Settings</h4>
+
+
+
+
+    <div class="row mb-5">
+        <div class="col-md-6 col-lg-4">
+          <div class="card text-center mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Password Reset</h5>
+              <hr>
+              <div class="input-group mb-2" id="oldPassword">
+                <input type="password" class="form-control" id="old-password" aria-describedby="OldPassword"
+                  aria-label="" placeholder="Old Password" />
+                </div>
+                <p id="old-message" style="color: red;"></p>
+              <div class="input-group mb-2" id="newPassword">
+                <input type="password" class="form-control" id="new-password" aria-describedby="NewPassword"
+                  aria-label="" placeholder="New Password" />
+                </div>
+                <p id="login-message" style="color: red;"></p>
+              <div class="input-group" id="renewPassword">
+                <input type="password" class="form-control" id="re-new-password" aria-describedby="NewPassword"
+                  aria-label="password" placeholder="Retype New Password" />
+                </div>
+                <p id="login2-message" style="color: red;"></p>
+              <div class="mb-2"></div>
+              <a href="javascript:void(0)" id="reset-password-btn" class="btn btn-primary">Reset Password</a>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const loginAlert = document.getElementById('login-message');
+    const passwordAlert = document.getElementById('login2-message');
+    const oldPassAlert = document.getElementById('old-message');
+
+    const newPassword = document.getElementById('new-password');
+    const reNewPassword = document.getElementById('re-new-password');
+    const oldPassword = document.getElementById('old-password')
+
+    let errorState = [true, true, true];
+
+
+    oldPassword.onkeyup =() => {
+        
+        if(oldPassword.value == ' ' || oldPassword.value == ''){
+            oldPassAlert.style.color = 'red';
+            oldPassAlert.innerHTML = 'Empty Password'
+            errorState[0] = true;
+        } else {
+            oldPassAlert.style.color = 'green';
+            oldPassAlert.innerHTML = ''
+            errorState[0] = false;
+        }
+    }
+
+
+    newPassword.onkeyup = () => {
+        let errorMsg = []
+        if(newPassword.value == '' || newPassword.value == ' ') {
+            loginAlert.innerHTML = 'Empty Password';
+            errorMsg.push('Empty Password');
+            loginAlert.style.color = 'red';
+        }
+        
+        var lowerCaseLetters = /[a-z]/g;
+        if(newPassword.value.match(lowerCaseLetters)) {
+            loginAlert.innerHTML = 'Contains a lowercase';
+        } else {
+            loginAlert.innerHTML = 'Does Not contain a lowercase';
+            errorMsg.push('Does Not Contain a lowercase')
+            
+            loginAlert.style.color = 'red';
+        }
+        
+        var upperCaseLetters = /[A-Z]/g;
+        if(newPassword.value.match(upperCaseLetters)) {
+            loginAlert.innerHTML = 'Contains an Uppercase';
+        } else {
+            loginAlert.style.color = 'red';
+            loginAlert.innerHTML = 'Does not contains an uppercase';
+            errorMsg.push('Does Not Contain An Uppercase');
+        }
+
+        var numbers = /[0-9]/g;
+        if(newPassword.value.match(numbers)) {            
+            loginAlert.innerHTML = 'Contains a Number';
+
+        } else {
+            loginAlert.innerHTML = 'Does not contains a Number';
+            errorMsg.push('Does Not Contain A Number')
+            loginAlert.style.color = 'red';
+        }
+
+        if(newPassword.value.length >= 8) {
+            loginAlert.innerHTML = 'Password Ok';
+            loginAlert.style.color = 'green';
+        } else {
+            loginAlert.innerHTML = 'Password length must be at least 8 digits';
+            errorMsg.push('Password length Must Be At least 8')
+        }
+
+
+        if(errorMsg.length > 0) {
+            loginAlert.style.color = 'red';
+            loginAlert.innerHTML = ''
+            errorMsg.forEach(err => {
+                loginAlert.innerHTML +=`${err} <br>`
+            })
+            errorState[1] = true;
+        }
+        if(newPassword.value == reNewPassword.value){
+            passwordAlert.innerHTML = 'Passwords Match';
+            passwordAlert.style.color = 'green';
+            errorState[2] = false;
+        } else {
+            passwordAlert.style.color = 'red';
+            passwordAlert.innerHTML = 'Passwords Do Not Match';
+            errorState[2] = true;
+        }
+    }
+
+    reNewPassword.onkeyup = () => {
+        if(reNewPassword.value == undefined || reNewPassword.value == ''){
+            passwordAlert.innerHTML = ''
+            passwordAlert.style.color = 'green';
+        }
+        else if(newPassword.value == reNewPassword.value){
+            passwordAlert.innerHTML = 'Passwords Match';
+            passwordAlert.style.color = 'green';
+
+        } else {
+            passwordAlert.style.color = 'red';
+            passwordAlert.innerHTML = 'Passwords Do Not Match';
+        }
+    }
+
+    document.getElementById('reset-password-btn').addEventListener('click', async(e) => {
+        await fetch('/teacher/resetPassword', {
+            method: "POST",
+            body: JSON.stringify({
+                oldPassword: oldPassword.value,
+                newPassword: newPassword.value,
+                reNewPassword: reNewPassword.value
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            if(res.code == 200) {
+                alert("Password Updated!");
+                window.location.href = "/teacher/dashboard/<%= teacher.collegeId %>/account-settings"
+            }
+        })
+        .catch(err => {
+            alert("Unable to update your password! Please contact College Administrator!");
+        })
+    })
+</script>
+
+
+
+<%- include('./common/footer.ejs') %>

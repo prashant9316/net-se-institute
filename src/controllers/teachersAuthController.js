@@ -82,7 +82,53 @@ const loginTeacher = async(req, res) => {
     }
 }
 
+
+const resetPassword = async(req, res) => {
+    const teacher = await TeacherLogin.findOne({ emailId: req.user.emailId })
+    if(!teacher){
+        return res.json({
+            status: 404,
+            code: 404,
+            error: "teacher not found!"
+        })
+    }
+    const validPass = await bcrypt.compare(req.body.oldPassword, teacher.password)
+    if(!validPass){
+        return res.json({
+            status: 401,
+            code: 401,
+            error: "Wrong Old Password",
+            message: "Wrong Old Password"
+        })
+    }
+    if(req.body.newPassword != req.body.reNewPassword){
+        return res.json({
+            status: 400,
+            code: 400,
+            error: "New Passwords typed don not match",
+            message: "New Passwords typed don not match"
+        })
+    }
+    const newHashedPassword = await bcrypt.hash(req.body.newPassword, 10)
+    const udpatedTeacherProfile = await TeacherLogin.findOneAndUpdate(
+        { emailId: req.user.emailId },
+        {
+            $set: {
+                password: newHashedPassword
+            }
+        },{
+            new: true
+        }
+    )
+    return res.json({
+        code: 200,
+        status: 200,
+        message: "Updated the password!"
+    })
+}
+
 module.exports = {
     registerTeacher,
-    loginTeacher
+    loginTeacher,
+    resetPassword
 }

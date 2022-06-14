@@ -1,5 +1,6 @@
 const Subjects = require('./../models/org/subjects')
 const Attendance = require('./../models/dashboard/attendance')
+const StudentProfile = require('./../models/studentProfile')
 const { getStudentBySubjectId } = require('./studentsController')
 
 
@@ -102,13 +103,66 @@ const markStudentAsPresent = async(req, res) => {
 }
 
 
+const attendanceCountBySubjectId = async(req) => {
+    try {
+        const studentId = req.params.studentId
+        const studentProfile = await StudentProfile.findOne({ enrollmentNumber: studentId })
+        const subjects = await Subjects.find({ sem: studentProfile.course.sem, courseId: studentProfile.course.courseId, collegeId: req.params.collegeId })
+        // console.log(subjects)
+        req.classes = []
+        const studentAttendanceBySubjectId = await Attendance.aggregate([
+            {
+                $match: {
+                    attendance: {$elemMatch: { enrollNumber: studentId, attendance: "P" }},
+                    collegeId: req.params.collegeId
+                } 
+            },
+            {
+                $group: {
+                    _id: "$subjectId",
+                    totalClassesAttended: { $sum: 1 }
+                }
+            }
+        ])
+
+        // const studentAttendance = await Attendance.find({ attendance: {$elemMatch: { enrollNumber: studentId }} })
+        
+        const classesBySubjectId = await Attendance.aggregate([
+            {
+                $match: {
+                    attendance: {$elemMatch: { enrollNumber: studentId }},
+                    collegeId: req.params.collegeId
+                }
+            },
+            {
+                $group: {
+                    _id: "$subjectId",
+                    totalClasses: { $sum: 1 }
+                }
+            }
+        ])
+        
+        // console.log(studentAttendanceBySubjectId)
+        return {
+            code: 200,
+            message: "Route In development",
+            classes: classesBySubjectId,
+            attendance: studentAttendanceBySubjectId
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+
 
 module.exports = {
     createNewPage,
     getAttendanceRegister,
     markStudentAsPresent,
     getAttendanceRegisterBySubjectId,
-    getAttendanceRegisterByTeacher
+    getAttendanceRegisterByTeacher,
+    attendanceCountBySubjectId
 }
 
 

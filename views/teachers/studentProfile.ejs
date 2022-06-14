@@ -25,7 +25,7 @@
                 id="uploadedAvatar"
               />
               <div class="button-wrapper">
-                <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                <!-- <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                   <span class="d-none d-sm-block">Upload new photo</span>
                   <i class="bx bx-upload d-block d-sm-none"></i>
                   <input
@@ -35,13 +35,17 @@
                     hidden
                     accept="image/png, image/jpeg"
                   />
-                </label>
-                <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                </label> -->
+                <!-- <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
                   <i class="bx bx-reset d-block d-sm-none"></i>
                   <span class="d-none d-sm-block">Reset</span>
-                </button>
+                </button> -->
+                <label for="upload" class="btn btn-primary me-2 mb-4" onclick="window.location.href = '/teacher/dashboard/<%= teacher.collegeId %>/view-student-attendance/<%= student.enrollmentNumber %>'" tabindex="0">
+                  <span class="d-none d-sm-block">View Attendance</span>
+                  <i class="bx bx-upload d-block d-sm-none"></i>
+                </label>
 
-                <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+                <!--<p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p> -->
               </div>
             </div>
           </div>
@@ -51,6 +55,9 @@
               <div class="row">
                 <div class="mb-3 col-md-6">
                   <label for="firstName" class="form-label">Student Name</label>
+                  <% if(student.name) {%>
+                    <h3><%= student.name %></h3>
+                  <% } else {%>
                   <input
                     class="form-control"
                     type="text"
@@ -59,13 +66,21 @@
                     value="<%= student.name %>"
                     autofocus
                   />
+                  <% } %>
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="lastName" class="form-label">Enrollment Num</label>
+                  <% if(student.enrollmentNumber) {%>
+                    <h3><%= student.enrollmentNumber %></h3>
+                  <% } else {%>
                   <input class="form-control" type="text" name="number" id="en" value="<%= student.enrollmentNumber %>" />
+                  <% } %>
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="email" class="form-label">E-mail</label>
+                  <% if(student.emailId) {%>
+                    <h3><%= student.emailId %></h3>
+                  <% } else {%>
                   <input
                     class="form-control"
                     type="text"
@@ -74,9 +89,13 @@
                     value="<%= student.emailId %>"
                     placeholder="john.doe@example.com"
                   />
+                  <% } %>
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="organization" class="form-label">Gender</label>
+                  <% if(student.gender) {%>
+                    <h3><%= student.gender %></h3>
+                  <% } else {%>
                   <input
                     type="text"
                     class="form-control"
@@ -84,11 +103,16 @@
                     name="Gender"
                     value="<%= student.gender %>"
                   />
+                  <% } %>
                 </div>
                 <div class="mb-3 col-md-6">
                   <label class="form-label" for="phoneNumber">Phone Number</label>
+                  
                   <div class="input-group input-group-merge">
-                    <span class="input-group-text">IN (+91)</span>
+                    <% if(student.phoneNumber) {%>
+                      <h3>+91 <%= student.phoneNumber %></h3>
+                      <% } else {%>
+                        <span class="input-group-text">IN (+91)</span>
                     <input
                       type="text"
                       id="phoneNumber"
@@ -97,45 +121,81 @@
                       placeholder="202 555 0111"
                       value="<%= student.phoneNumber %>"
                     />
+                    <% } %>
                   </div>
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="address" class="form-label">Address</label>
-                  <input type="text" class="form-control" id="address" name="address" placeholder="Address" />
+                  <% if(student.address) {%>
+                    <h3><%= student.address %></h3>
+                    <% } else {%>
+                  <input type="text" class="form-control" id="address" name="address" placeholder="Address" value="<%= student.address %>" />
+                  <% } %>
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="state" class="form-label">Age</label>
+                  <% if(student.age) {%>
+                    <h3><%= student.age %></h3>
+                    <% } else {%>
                   <input class="form-control" type="text" id="age" name="state" placeholder="Age" value="<%= student.age %>" />
+                  <% } %>
                 </div>
                 <div class="mb-3 col-md-6">
-                    <label for="address" class="form-label">Course</label>
+                  <label for="address" class="form-label">Course</label>
+                  <% if(student.course.courseName) {%>
+                    <h3><%= student.course.courseName %></h3>
+                    <% } else {%>
                     <input type="text" class="form-control" id="course" name="course" placeholder="Course" value="<%= student.course.courseName %>" />
+                    <% } %>
                   </div>
                   <div class="mb-3 col-md-6">
                     <label for="state" class="form-label">Current Year</label>
+                    <% if(student.course.currentYear) {%>
+                      <h3>Year <%= student.course.currentYear %></h3>
+                      <% } else {%>
                     <input class="form-control" type="text" id="year" name="year" placeholder="Current Year" value="<%= student.course.currentYear %>" />
+                        <% } %>
                   </div>
                   <div class="mb-3 col-md-6">
                     <label for="state" class="form-label">Semester</label>
+                    <% if(student.course.sem) {%>
+                      <h3>Sem <%= student.course.sem %></h3>
+                      <% } else {%>
                     <input class="form-control" type="text" id="sem" name="sem" placeholder="Semester" value="<%= student.course.sem %>" />
+                    <% } %>
                   </div>
                 
               </div>
-              <div class="mt-2">
+              <!-- <div class="mt-2">
                 <button type="submit" class="btn btn-primary me-2">Update changes</button>
                 <button type="reset" class="btn btn-outline-secondary">Cancel</button>
-              </div>
+              </div> -->
             </form>
           </div>
           <!-- /Account -->
         </div>
+        <div class="card my-4">
+          <h5 class="card-header">Students' Subjects</h5>
+          <div class="card-body">
+            <form id="formAccountDeactivation" onsubmit="return false">
+                <div class="demo-inline-spacing">
+                <% for(var i = 0; i < subjects.length; i++) { %>
+                    <span class="badge bg-label-info">Subject <%= i+1 %></span>: <span class="badge bg-label-dark"><%= subjects[i].subjectName %> (Sem <%= subjects[i].sem %>)</span>
+                    <br>
+                    <% } %>
+                </div>
+             
+            </form>
+          </div>
+          
+        </div>
         <div class="card">
-          <h5 class="card-header">Delete Student Account</h5>
+          <h5 class="card-header">Report Student Account</h5>
           <div class="card-body">
             <div class="mb-3 col-12 mb-0">
               <div class="alert alert-warning">
-                <h6 class="alert-heading fw-bold mb-1">Are you sure you want to delete the student account?</h6>
-                <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
+                <h6 class="alert-heading fw-bold mb-1">Are you sure you want to report the student account?</h6>
+                <p class="mb-0">Once you report this student account, We'll take Action against the student. Please be certain.</p>
               </div>
             </div>
             <form id="formAccountDeactivation" onsubmit="return false">
@@ -147,10 +207,10 @@
                   id="accountActivation"
                 />
                 <label class="form-check-label" for="accountActivation"
-                  >I confirm the student account deactivation</label
+                  >I confirm to report the student account</label
                 >
               </div>
-              <button type="submit" onclick="alert('in working')" class="btn btn-danger deactivate-account">Deactivate Account</button>
+              <button type="submit" onclick="alert('in working')" class="btn btn-danger deactivate-account">Report Account</button>
             </form>
           </div>
         </div>
