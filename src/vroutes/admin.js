@@ -79,7 +79,8 @@ router.get('/dashboard/:collegeId/create-new-course', verifyAdmin, async(req, re
 })
 
 router.get('/dashboard/:collegeId/view-all-subjects', verifyAdmin, async(req, res) => {
-    const subjects = await Subjects.find({})
+    const subjects = await Subjects.find({ collegeId: req.user.collegeId })
+    console.log(req.user)
     const courses = await Courses.find({ collegeId: req.user.collegeId })
     return res.render('admin/viewSubjects', {
         admin: req.user,
